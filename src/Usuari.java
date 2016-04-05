@@ -1,16 +1,21 @@
-import javax.persistence.Entity;
-import javax.persistence.Id;
+import javax.persistence.*;
 
 /**
  * Created by guillemc on 05/04/2016.
  */
 @Entity
+@Table(name = "USUARI")
 public class Usuari {
 
     // Un usuari es identificat pel seu username
     @Id
+    @Column(name = "username")
     private String username;
+
+    @Column(name = "nom")
     private String nom;
+
+    @Column(name = "email")
     private String email;
 
     public Usuari() {}

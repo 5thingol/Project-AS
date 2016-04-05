@@ -21,6 +21,7 @@ public class TesterMain {
 
         // Configuracio d'hibernate
         Configuration configuration = new Configuration();
+        configuration.configure("hibernate.cfg.xml");
         configuration.addAnnotatedClass(Usuari.class);
         serviceRegistry = new ServiceRegistryBuilder().applySettings(configuration.getProperties()).buildServiceRegistry();
         ourSessionFactory = configuration.buildSessionFactory(serviceRegistry);
