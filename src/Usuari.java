@@ -26,6 +26,8 @@ public class Usuari {
         this.email = email;
     }
 
+    // GETTERS & SETTERS
+
     public String getUsername() {
         return username;
     }
