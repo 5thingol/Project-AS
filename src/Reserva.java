@@ -7,7 +7,7 @@ import java.util.Date;
  */
 @Entity
 @Table(name = "Reserva")
-public class Reserva {
+public class Reserva implements java.io.Serializable {
 
     @Id
     @Column(name = "nomRecurs")
