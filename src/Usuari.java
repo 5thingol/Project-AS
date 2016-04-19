@@ -1,4 +1,6 @@
+
 import javax.persistence.*;
+import java.util.*;
 
 /**
  * Created by guillemc on 05/04/2016.
@@ -7,7 +9,6 @@ import javax.persistence.*;
 @Table(name = "USUARI")
 public class Usuari {
 
-    // Un usuari es identificat pel seu username
     @Id
     @Column(name = "username")
     private String username;
@@ -18,12 +19,20 @@ public class Usuari {
     @Column(name = "email")
     private String email;
 
-    public Usuari() {}
+    @OneToMany(mappedBy="usuariCreador")
+    private Set<Reserva> reservesCreades;
+
+    // CONSTRUCTORS
+
+    public Usuari() {
+        reservesCreades = new HashSet<Reserva>();
+    }
 
     public Usuari(String username, String nom, String email) {
         this.username = username;
         this.nom = nom;
         this.email = email;
+        reservesCreades = new HashSet<Reserva>();
     }
 
     // GETTERS & SETTERS
@@ -52,4 +61,49 @@ public class Usuari {
         this.email = email;
     }
 
+    public Set<Reserva> getReservesCreades() { return reservesCreades; }
+
+    public void setReservesCreades(Set<Reserva> reservesCreades) { this.reservesCreades = reservesCreades; }
+
+    // FUNCIONS DE LA CLASSE
+
+    /**
+     * Obte la informacio de l'usuari
+     * @return una llista amb els seguents strings, per ordre: l'username, el nom i l'email de l'usuari
+     */
+    public List<String> getInfo() {
+        List<String> info = new ArrayList<String>();
+        info.add(username);
+        info.add(nom);
+        info.add(email);
+        return info;
+    }
+
+    /**
+     * Comprova si l'usuari ja te reservada una altra sala en un periode que se solapa amb l'indicat
+     * @param data: la data del periode que es vol comprovar
+     * @param horaInici: l'hora d'inici del periode que es vol comprovar
+     * @param horaFi: l'hora de fi del periode que es vol comprovar
+     * @return true si l'usuari te una reserva d'una sala que se solapa amb el periode,
+     * false en qualsevol altre cas
+     */
+    public boolean usuariSolapaReservaDeSala(Date data, int horaInici, int horaFi) {
+        Boolean salaSolapada = false;
+
+        // Recorrer la llista de reserves que ha creat l'usuari i comprovar si alguna se solapa
+        // amb el periode passat per parametre
+        for (Reserva reserva : reservesCreades) {
+            // Comprovar si la reserva es d'una sala i si hi ha solapacio
+            if (reserva.esReservaDeSala() && reserva.solapa(data, horaInici, horaFi)) salaSolapada = true;
+        }
+        return salaSolapada;
+    }
+
+    /**
+     * Afegeix la reserva passada com a parametre a la llista de reserves creades per l'usuari
+     * @param reserva: la reserva que s'afegira a les reserves creades per l'usuari
+     */
+    public void assignaReserva(Reserva reserva) {
+        reservesCreades.add(reserva);
+    }
 }

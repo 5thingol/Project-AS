@@ -1,3 +1,4 @@
+
 import javax.persistence.*;
 import java.util.Calendar;
 import java.util.Date;
@@ -9,48 +10,67 @@ import java.util.Date;
 @Table(name = "Reserva")
 public class Reserva implements java.io.Serializable {
 
+   /* @Id
+    @GeneratedValue(strategy=GenerationType.AUTO)
+    @Column(name="id")
+    private long id;
+
     @Id
-    @Column(name = "nomRecurs")
+    @Column(name = "nom_recurs")
     private String nomRecurs;
+*/
+    @Id
+    @ManyToOne
+    @JoinColumn(name = "recurs_id", referencedColumnName = "nom")
+    private Recurs recurs;
 
     @Id
     @Column(name = "data")
     private Date data;
 
     @Id
-    @Column(name = "horaInici")
+    @Column(name = "hora_inici")
     private int horaInici;
 
-    @Column(name = "horaFi")
+    @Column(name = "hora_fi")
     private int horaFi;
 
     @Column(name = "comentaris")
     private String comentaris;
 
-    @Column(name = "idUsuariCreador")
-    private String idUsuariCreador;
+    @ManyToOne
+    private Usuari usuariCreador;
 
-    // CREADORES
+
+    // CONSTRUCTORS
 
     public Reserva() {}
 
-    public Reserva(String nomRecurs, Date data, int horaInici, int horaFi, String comentaris, String idUsuariCreador) {
-        this.nomRecurs = nomRecurs;
+    public Reserva(Recurs recurs, Date data, int horaInici, int horaFi, String comentaris, Usuari usuariCreador) {
+        inicialitza(recurs, data, horaInici, horaFi, comentaris, usuariCreador);
+    }
+
+    public void inicialitza(Recurs recurs, Date data, int horaInici, int horaFi, String comentaris, Usuari usuariCreador) {
+        this.recurs = recurs;
         this.data = data;
         this.horaInici = horaInici;
         this.horaFi = horaFi;
         this.comentaris = comentaris;
-        this.idUsuariCreador = idUsuariCreador;
+        this.usuariCreador = usuariCreador;
     }
 
     // GETTERS & SETTERS
+/*
+    public long getId() { return id; }
 
-    public String getNomRecurs() {
-        return nomRecurs;
+    private void setId(long id) { this.id = id; }
+*/
+    public Recurs getRecurs() {
+        return recurs;
     }
 
-    public void setNomRecurs(String nomRecurs) {
-        this.nomRecurs = nomRecurs;
+    public void setRecurs(Recurs recurs) {
+        this.recurs = recurs;
     }
 
     public Date getData() {
@@ -85,15 +105,21 @@ public class Reserva implements java.io.Serializable {
         this.comentaris = comentaris;
     }
 
-    public String getIdUsuariCreador() {
-        return idUsuariCreador;
-    }
+    public Usuari getUsuariCreador() { return usuariCreador; }
 
-    public void setIdUsuariCreador(String idUsuariCreador) {
-        this.idUsuariCreador = idUsuariCreador;
+    public void setUsuariCreador(Usuari usuariCreador) {
+        this.usuariCreador = usuariCreador;
     }
 
     // FUNCIONS DE LA CLASSE
+
+    /**
+     * Comprova si la instancia es una reserva amb notificacio
+     * @return false si es instancia de la superclasse Reserva
+     */
+    public boolean esReservaAmbNotificacio() {
+        return false;
+    }
 
     /**
      *    Comprova si reserva se solapa amb algun interval de la data i les hores donades
@@ -103,7 +129,7 @@ public class Reserva implements java.io.Serializable {
      *    @return true si alguna hora de l'interval donat coincideix amb alguna hora de l'interval
      *    d'us de la reserva, i false en qualsevol altre cas
      */
-    public Boolean solapa(Date data, int hi, int hf) {
+    public boolean solapa(Date data, int hi, int hf) {
         if ((horaInici < hi && hi < horaFi) || (horaInici < hf && hf < horaFi)) return true;
         else return false;
     }
@@ -113,7 +139,7 @@ public class Reserva implements java.io.Serializable {
      *    @return true si la reserva esta caducada, es a dir, la seva data es anterior a la data actual.
      *    False en qualsevol altre cas
      */
-    public Boolean reservaEstaCaducada() {
+    public boolean reservaEstaCaducada() {
         Date currentDate = Calendar.getInstance().getTime();
         if (currentDate.after(data)) {
             return true;
@@ -121,4 +147,12 @@ public class Reserva implements java.io.Serializable {
             return false;
     }
 
+    /**
+     * Comprova si el recurs de la reserva es una sala
+     * @return true si el recurs associat a la reserva es una sala, fals en qualsevol altre cas
+     */
+    public boolean esReservaDeSala() {
+        // Comprovar si el recurs es una sala o no
+        return recurs.recEsSala();
+    }
 }
