@@ -20,6 +20,10 @@ public class Recurs {
 
     public void setNom(String nom) { this.nom = nom; }
 
+    public String getNom() {
+        return nom;
+    }
+
     public boolean recEsSala() {
         return false;
     }
