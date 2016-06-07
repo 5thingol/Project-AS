@@ -10,9 +10,10 @@ import org.hibernate.service.ServiceRegistry;
 import org.hibernate.service.ServiceRegistryBuilder;
 import org.hibernate.tool.hbm2ddl.SchemaExport;
 
-public class HibernateUtil {
+public class FactoriaDades {
 
-    private static final SessionFactory sessionFactory = buildSessionFactory();
+    private static FactoriaDades instance;
+    private static SessionFactory sessionFactory;
     private static Session currentSession;
 
     private static SessionFactory buildSessionFactory() {
@@ -39,15 +40,24 @@ public class HibernateUtil {
         }
     }
 
-    public static SessionFactory getSessionFactory() {
-        return sessionFactory;
+    private FactoriaDades() {
+        sessionFactory = buildSessionFactory();
     }
 
-    public static void openSession() {
+    public static FactoriaDades getInstance() {
+        if (instance == null) {
+            instance = new FactoriaDades();
+        }
+        return instance;
+    }
+
+    //public static SessionFactory getSessionFactory() {return sessionFactory; }
+
+    public void openSession() {
         currentSession = sessionFactory.openSession();
     }
 
-    public static Session getCurrentSession() {
+    public Session getCurrentSession() {
         return currentSession;
     }
 

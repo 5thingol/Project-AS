@@ -1,5 +1,6 @@
 package as.project.domain.controllers;
 
+import as.project.datalayer.FactoriaDades;
 import as.project.datalayer.HibernateUtil;
 import as.project.domain.excepcions.*;
 import as.project.domain.model.Recurs;
@@ -27,7 +28,7 @@ public class CtrlAssignarUsuarisANotificarUnaReserva {
     public List<List<String>> obteUsuarisAAssignar(String nomRecurs, Date data, int horaInici) throws NoReservaAmbNotificacio, NoHiHaReserva, ReservaCaducada, ReservaATope, NoHiHaProusUsuaris {
 
         // Obtenim la sessió actual
-        Session session = HibernateUtil.getCurrentSession();
+        Session session = FactoriaDades.getInstance().getCurrentSession();
 
         // Creem una reserva buida excepte els seus ids per a que hibernate ens torni la reserva amb aquests ids
         Reserva reservaStub = new Reserva(new Recurs(nomRecurs),data,horaInici,0,"",null);
@@ -77,7 +78,7 @@ public class CtrlAssignarUsuarisANotificarUnaReserva {
     public void afegirUsuarisAReserva(List<String> usernames) throws ReservaATope {
 
         // Obtenim la sessió actual
-        Session session = HibernateUtil.getCurrentSession();
+        Session session = FactoriaDades.getInstance().getCurrentSession();
 
         // Creem una reserva buida excepte els seus ids per a que hibernate ens torni la reserva amb aquests ids
         ReservaAmbNotificacio reservaStub = new ReservaAmbNotificacio(new Recurs(nomRecurs),data,horaInici,0,"",null);

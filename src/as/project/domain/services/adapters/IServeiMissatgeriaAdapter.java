@@ -1,5 +1,7 @@
 package as.project.domain.services.adapters;
 
+import as.project.domain.excepcions.ServeiNoDisponible;
+
 import java.util.Date;
 import java.util.List;
 
@@ -8,6 +10,6 @@ import java.util.List;
  */
 public interface IServeiMissatgeriaAdapter {
 
-    void enviarDadesReserva(String nomReserva, Date data, int horaInici, int horaFi, String username, String comentari, List<String> emails);
+    void enviarDadesReserva(String nomRecurs, Date data, int horaInici, int horaFi, String username, String comentari, List<String> emails) throws ServeiNoDisponible;
 
 }
