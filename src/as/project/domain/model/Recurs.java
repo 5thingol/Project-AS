@@ -1,3 +1,4 @@
+package as.project.domain.model;
 
 import javax.persistence.*;
 
@@ -7,7 +8,7 @@ import javax.persistence.*;
 // Aixo es una primera versio de la classe recurs perque compili tot
 // TO-DO: CANVIAR TOT PER LA SEGUENT ENTREGA!
 @Entity
-@Table(name= "Recurs" )
+@Table(name= "as.project.domain.model.Recurs" )
 public class Recurs {
 
     @Id
@@ -16,6 +17,10 @@ public class Recurs {
 
     public Recurs() {
 
+    }
+
+    public Recurs(String nom) {
+        this.nom = nom;
     }
 
     public void setNom(String nom) { this.nom = nom; }

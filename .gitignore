@@ -11,11 +11,11 @@ src/hibernate.cfg.xml
 
 Project-AS.iml
 
-out/production/Project-AS/Usuari.class
+out/production/Project-AS/as.project.domain.model.Usuari.class
 
 out/production/Project-AS/TesterMain.class
 
-out/production/Project-AS/Reserva.class
+out/production/Project-AS/as.project.domain.model.Reserva.class
 
 out/production/Project-AS/hibernate.cfg.xml
 

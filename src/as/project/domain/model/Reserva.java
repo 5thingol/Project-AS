@@ -1,3 +1,4 @@
+package as.project.domain.model;
 
 import javax.persistence.*;
 import java.util.Calendar;
@@ -7,7 +8,7 @@ import java.util.Date;
  * Created by guillemc on 05/04/2016.
  */
 @Entity
-@Table(name = "Reserva")
+@Table(name = "as.project.domain.model.Reserva")
 public class Reserva implements java.io.Serializable {
 
    /* @Id
@@ -60,11 +61,7 @@ public class Reserva implements java.io.Serializable {
     }
 
     // GETTERS & SETTERS
-/*
-    public long getId() { return id; }
 
-    private void setId(long id) { this.id = id; }
-*/
     public Recurs getRecurs() {
         return recurs;
     }
@@ -115,7 +112,7 @@ public class Reserva implements java.io.Serializable {
 
     /**
      * Comprova si la instancia es una reserva amb notificacio
-     * @return false si es instancia de la superclasse Reserva
+     * @return false si es instancia de la superclasse as.project.domain.model.Reserva
      */
     public boolean esReservaAmbNotificacio() {
         return false;
@@ -154,5 +151,24 @@ public class Reserva implements java.io.Serializable {
     public boolean esReservaDeSala() {
         // Comprovar si el recurs es una sala o no
         return recurs.recEsSala();
+    }
+
+    @Override
+    public boolean equals(Object obj) {
+        if (obj == null) {
+            return false;
+        }
+        if (getClass() != obj.getClass()) {
+            return false;
+        }
+        final Reserva reserva2 = (Reserva) obj;
+        return recurs.getNom().equals(reserva2.getRecurs().getNom()) && data.equals(reserva2.getData()) && horaInici == reserva2.getHoraInici();
+    }
+
+    @Override
+    public int hashCode() {
+        int hash = 3;
+        hash = 53 * hash + (this.recurs.getNom() != null ? this.recurs.getNom().hashCode() : 0) + (this.data != null ? this.data.hashCode() : 0) + this.horaInici;
+        return hash;
     }
 }

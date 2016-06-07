@@ -1,3 +1,7 @@
+import as.project.datalayer.HibernateUtil;
+import as.project.domain.model.Recurs;
+import as.project.domain.model.Reserva;
+import as.project.domain.model.Usuari;
 import org.hibernate.Session;
 import java.sql.*;
 import java.util.Date;
@@ -30,9 +34,9 @@ public class DBTest {
                         System.out.print("Data: " + aux.getData() + " | ");
                         System.out.print("Hora inici: " + aux.getHoraInici() + " | ");
                         System.out.print("Hora fi: " + aux.getHoraFi() + " | ");
-                        System.out.print("Recurs: " + aux.getRecurs().getNom() + " | ");
+                        System.out.print("as.project.domain.model.Recurs: " + aux.getRecurs().getNom() + " | ");
                         System.out.print("Comentari: " + aux.getComentaris() + " | ");
-                        System.out.println("Usuari: " + aux.getUsuariCreador().getUsername());
+                        System.out.println("as.project.domain.model.Usuari: " + aux.getUsuariCreador().getUsername());
                     }
                     break;
                 case "2":
@@ -74,12 +78,12 @@ public class DBTest {
 
         Usuari u1 = new Usuari();
         u1.setEmail("usuari.1@est.fib.upc.edu");
-        u1.setNom("Usuari 1");
+        u1.setNom("as.project.domain.model.Usuari 1");
         u1.setUsername("usuari1");
 
         Usuari u2 = new Usuari();
         u2.setEmail("usuari.2@est.fib.upc.edu");
-        u2.setNom("Usuari 2");
+        u2.setNom("as.project.domain.model.Usuari 2");
         u2.setUsername("usuari2");
 
         Reserva r1 = new Reserva();

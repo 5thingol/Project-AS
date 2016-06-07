@@ -1,3 +1,4 @@
+package as.project.domain.model;
 
 import javax.persistence.*;
 import java.util.*;
