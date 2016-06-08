@@ -38,8 +38,8 @@ public class Ordinador extends Recurs{
         return model;
     }
 
-    public InfoOrdinador getInfo(){
-        return new InfoOrdinador(marca,model);
+    public InfoRecurs getInfo(){
+        return new InfoRecurs( null, marca, model, 0, null, null );
     }
 
 }

@@ -1,16 +1,20 @@
 package as.project.domain.model;
 
+import javax.persistence.*;
+
 /**
  * Created by romabejar on 08/06/16.
  */
-public class InfoProjector {
+@Entity
+@Table(name= "as.project.domain.model.Projector" )
+public class Projector extends Recurs {
 
     private String resolucio;
 
-    public InfoProjector() {
+    public Projector() {
     }
 
-    public InfoProjector(String resolucio) {
+    public Projector(String resolucio) {
         this.resolucio = resolucio;
     }
 
@@ -20,5 +24,9 @@ public class InfoProjector {
 
     public void setResolucio(String resolucio) {
         this.resolucio = resolucio;
+    }
+
+    public InfoRecurs getInfo(){
+        return new InfoRecurs(null,null,null,0,null,resolucio);
     }
 }

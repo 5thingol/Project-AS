@@ -9,7 +9,7 @@ import javax.persistence.*;
 // TO-DO: CANVIAR TOT PER LA SEGUENT ENTREGA!
 @Entity
 @Table(name= "as.project.domain.model.Recurs" )
-public class Recurs {
+public abstract class Recurs {
 
     @Id
     @Column(name = "nom")

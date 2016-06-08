@@ -8,14 +8,14 @@ public class InfoRecurs {
     private String nom;
     private String marca;
     private String model;
-    private String aforament;
+    private int aforament;
     private String ubicacio;
     private String resolucio;
 
     public InfoRecurs() {
     }
 
-    public InfoRecurs(String nom, String marca, String model, String aforament, String ubicacio, String resolucio) {
+    public InfoRecurs(String nom, String marca, String model, int aforament, String ubicacio, String resolucio) {
         this.nom = nom;
         this.marca = marca;
         this.model = model;
@@ -48,11 +48,11 @@ public class InfoRecurs {
         this.model = model;
     }
 
-    public String getAforament() {
+    public int getAforament() {
         return aforament;
     }
 
-    public void setAforament(String aforament) {
+    public void setAforament(int aforament) {
         this.aforament = aforament;
     }
 
