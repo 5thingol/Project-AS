@@ -36,8 +36,8 @@ public class Reserva implements java.io.Serializable {
     @Column(name = "hora_fi")
     private int horaFi;
 
-    @Column(name = "comentaris")
-    private String comentaris;
+    @Column(name = "comentari")
+    private String comentari;
 
     @ManyToOne
     private Usuari usuariCreador;
@@ -47,16 +47,16 @@ public class Reserva implements java.io.Serializable {
 
     public Reserva() {}
 
-    public Reserva(Recurs recurs, Date data, int horaInici, int horaFi, String comentaris, Usuari usuariCreador) {
-        inicialitza(recurs, data, horaInici, horaFi, comentaris, usuariCreador);
+    public Reserva(Recurs recurs, Date data, int horaInici, int horaFi, String comentari, Usuari usuariCreador) {
+        inicialitza(recurs, data, horaInici, horaFi, comentari, usuariCreador);
     }
 
-    public void inicialitza(Recurs recurs, Date data, int horaInici, int horaFi, String comentaris, Usuari usuariCreador) {
+    public void inicialitza(Recurs recurs, Date data, int horaInici, int horaFi, String comentari, Usuari usuariCreador) {
         this.recurs = recurs;
         this.data = data;
         this.horaInici = horaInici;
         this.horaFi = horaFi;
-        this.comentaris = comentaris;
+        this.comentari = comentari;
         this.usuariCreador = usuariCreador;
     }
 
@@ -94,12 +94,12 @@ public class Reserva implements java.io.Serializable {
         this.horaFi = horaFi;
     }
 
-    public String getComentaris() {
-        return comentaris;
+    public String getComentari() {
+        return comentari;
     }
 
-    public void setComentaris(String comentaris) {
-        this.comentaris = comentaris;
+    public void setComentari(String comentari) {
+        this.comentari = comentari;
     }
 
     public Usuari getUsuariCreador() { return usuariCreador; }

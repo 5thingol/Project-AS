@@ -35,7 +35,7 @@ public class DBTest {
                         System.out.print("Hora inici: " + aux.getHoraInici() + " | ");
                         System.out.print("Hora fi: " + aux.getHoraFi() + " | ");
                         System.out.print("as.project.domain.model.Recurs: " + aux.getRecurs().getNom() + " | ");
-                        System.out.print("Comentari: " + aux.getComentaris() + " | ");
+                        System.out.print("Comentari: " + aux.getComentari() + " | ");
                         System.out.println("as.project.domain.model.Usuari: " + aux.getUsuariCreador().getUsername());
                     }
                     break;
@@ -91,7 +91,7 @@ public class DBTest {
         r1.setData(new Date(2016, 8, 01));
         r1.setHoraInici(8);
         r1.setHoraFi(10);
-        r1.setComentaris("Comment1");
+        r1.setComentari("Comment1");
         r1.setUsuariCreador(u1);
         u1.assignaReserva(r1);
 
@@ -100,7 +100,7 @@ public class DBTest {
         r2.setData(new Date(2016, 10, 01));
         r2.setHoraInici(16);
         r2.setHoraFi(19);
-        r2.setComentaris("Comment2");
+        r2.setComentari("Comment2");
         r2.setUsuariCreador(u2);
         u2.assignaReserva(r2);
 
