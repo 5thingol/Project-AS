@@ -11,10 +11,7 @@ import as.project.domain.services.adapters.FactoriaAdapters;
 import as.project.domain.services.adapters.IServeiMissatgeriaAdapter;
 import org.hibernate.Session;
 
-import java.util.ArrayList;
-import java.util.Calendar;
-import java.util.Date;
-import java.util.List;
+import java.util.*;
 
 /**
  * Created by guillemc on 07/06/2016.
@@ -50,7 +47,7 @@ public class CtrlAssignarUsuarisANotificarUnaReserva {
 
         List<Usuari> totsUsuaris = session.createCriteria(Usuari.class).list();
 
-        List<Usuari> usuarisNotificats = ran.getUsuarisNotificats();
+        Set<Usuari> usuarisNotificats = ran.getUsuarisNotificats();
 
         for (Usuari u : usuarisNotificats) {
             totsUsuaris.remove(u);
@@ -88,7 +85,7 @@ public class CtrlAssignarUsuarisANotificarUnaReserva {
         int nUsuarisNotificats = ran.getNumUsuarisNotificats();
         if (nUsuarisNotificats + usernames.size() > 10) throw new ReservaATope();
 
-        List<Usuari> usuarisAAfegir = new ArrayList<>();
+        Set<Usuari> usuarisAAfegir = new HashSet<Usuari>();
         List<String> emails = new ArrayList<>();
 
         for (String username : usernames) {
@@ -104,6 +101,10 @@ public class CtrlAssignarUsuarisANotificarUnaReserva {
         String comentari = ran.getComentari();
 
         IServeiMissatgeriaAdapter adapter = FactoriaAdapters.getInstance().getServeiMissatgeriaAdapter();
-        adapter.enviarDadesReserva(nomRecurs, data, horaInici, horaFi, usernameCreador, comentari, emails);
+        try {
+            adapter.enviarDadesReserva(nomRecurs, data, horaInici, horaFi, usernameCreador, comentari, emails);
+        } catch (ServeiNoDisponible serveiNoDisponible) {
+            serveiNoDisponible.printStackTrace();
+        }
     }
 }

@@ -1,12 +1,19 @@
 package as.project.domain.model;
 
+import javax.persistence.Entity;
+import javax.persistence.OneToMany;
+import javax.persistence.Table;
 import java.util.HashSet;
 import java.util.Set;
 
 /**
  * Created by eduard on 07/06/2016.
  */
+@Entity
+@Table(name= "as.project.domain.model.Sala" )
 public class ReservaAmbNotificacio extends Reserva {
+
+    @OneToMany
     private Set<Usuari> usuarisNotificats = new HashSet<Usuari>();
 
     public int getNumUsuarisNotificats() { return usuarisNotificats.size(); }

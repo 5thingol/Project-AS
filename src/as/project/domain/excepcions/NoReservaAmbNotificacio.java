@@ -13,5 +13,4 @@ public class NoReservaAmbNotificacio extends Exception {
             super();
         }
 
-    }
 }
