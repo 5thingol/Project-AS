@@ -15,7 +15,7 @@ public class ReservaAmbNotificacio extends Reserva {
 
     public InfoReservaAmbNotificacio getInfo() {
         InfoReservaAmbNotificacio info = new InfoReservaAmbNotificacio();
-        info.setUsername(getUsuariCreador().getUsername());
+        info.setUsername(getUsernameUsuari());
         info.setHoraFi(getHoraFi());
         info.setComentari(getComentari());
         return info;
@@ -26,6 +26,7 @@ public class ReservaAmbNotificacio extends Reserva {
         else return false;
     }
 
+    @Override
     public boolean esReservaAmbNotificacio() { return true; }
 
     public Set<Usuari> getUsuarisNotificats() { return usuarisNotificats; }

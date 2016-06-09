@@ -108,6 +108,8 @@ public class Reserva implements java.io.Serializable {
         this.usuariCreador = usuariCreador;
     }
 
+    public String getUsernameUsuari() { return this.usuariCreador.getUsername(); }
+
     // FUNCIONS DE LA CLASSE
 
     /**
