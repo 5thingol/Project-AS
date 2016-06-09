@@ -9,6 +9,7 @@ import javax.persistence.*;
 @Table(name= "as.project.domain.model.Projector" )
 public class Projector extends Recurs {
 
+    @Column(name = "resolucio")
     private String resolucio;
 
     public Projector() {

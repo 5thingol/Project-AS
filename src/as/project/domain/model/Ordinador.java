@@ -9,11 +9,14 @@ import javax.persistence.*;
 @Table(name= "as.project.domain.model.Ordinador" )
 public class Ordinador extends Recurs{
 
+    @Column(name = "marca")
     private String marca;
+
+    @Column(name = "model")
     private String model;
 
-    public Ordinador() {
-
+    public Ordinador(String nomOrdinador) {
+        super(nomOrdinador);
     }
 
     public Ordinador(String nom, String marca, String model){

@@ -1,5 +1,8 @@
 package as.project.domain.model;
 
+import as.project.datalayer.FactoriaDades;
+import org.hibernate.Session;
+
 import javax.persistence.*;
 
 /**
@@ -9,10 +12,17 @@ import javax.persistence.*;
 @Table(name= "as.project.domain.model.Sala" )
 public class Sala extends Recurs {
 
+    @Column(name = "aforament")
     private int aforament;
+
+    @Column(name = "ubicacio")
     private String ubicacio;
-    public Ordinador ordinador;
-    public Projector projector;
+
+    @OneToOne
+    private Ordinador ordinador;
+
+    @OneToOne
+    private Projector projector;
 
 
     public Sala() {
