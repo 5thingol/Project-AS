@@ -1,6 +1,7 @@
 package as.project.domain.model;
 
 import javax.persistence.*;
+import javax.ws.rs.ext.Provider;
 
 /**
  * Created by romabejar on 08/06/16.
@@ -42,8 +43,13 @@ public class Ordinador extends Recurs{
         return model;
     }
 
-    public InfoRecurs getInfo(){
+    @Override
+    public InfoRecurs getExtraInfo(){
         return new InfoRecurs( null, marca, model, 0, null, null );
     }
+
+    /*public InfoRecurs getInfo(){
+        return new InfoRecurs( null, marca, model, 0, null, null );
+    }*/
 
 }

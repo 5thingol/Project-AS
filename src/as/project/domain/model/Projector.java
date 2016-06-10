@@ -28,7 +28,14 @@ public class Projector extends Recurs {
         this.resolucio = resolucio;
     }
 
+    @Override
+    public InfoRecurs getExtraInfo(){
+        return new InfoRecurs( null, null, null, 0, null, resolucio);
+    }
+
+    /*
     public InfoRecurs getInfo(){
         return new InfoRecurs(null,null,null,0,null,resolucio);
     }
+    */
 }
