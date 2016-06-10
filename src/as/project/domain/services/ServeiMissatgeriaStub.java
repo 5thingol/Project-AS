@@ -60,14 +60,14 @@ public class ServeiMissatgeriaStub extends org.apache.axis2.client.Stub {
         org.apache.axis2.context.ConfigurationContext configurationContext)
         throws org.apache.axis2.AxisFault {
         this(configurationContext,
-            "http://localhost:8080//services/ServeiMissatgeria");
+            "http://localhost:8080/axis2/services/ServeiMissatgeria");
     }
 
     /**
      * Default Constructor
      */
     public ServeiMissatgeriaStub() throws org.apache.axis2.AxisFault {
-        this("http://localhost:8080//services/ServeiMissatgeria");
+        this("http://localhost:8080/axis2/services/ServeiMissatgeria");
     }
 
     /**
@@ -103,8 +103,8 @@ public class ServeiMissatgeriaStub extends org.apache.axis2.client.Stub {
 
         __operation = new org.apache.axis2.description.OutOnlyAxisOperation();
 
-        __operation.setName(new javax.xml.namespace.QName("http://null",
-                "enviarMissatgeReserva"));
+        __operation.setName(new javax.xml.namespace.QName(
+                "http://ws.apache.org/axis2", "enviarMissatgeReserva"));
         _service.addOperation(__operation);
 
         _operations[0] = __operation;
@@ -139,9 +139,9 @@ public class ServeiMissatgeriaStub extends org.apache.axis2.client.Stub {
                                                     .getSoapVersionURI()),
                 enviarMissatgeReserva0,
                 optimizeContent(
-                    new javax.xml.namespace.QName("http://null",
-                        "enviarMissatgeReserva")),
-                new javax.xml.namespace.QName("http://null",
+                    new javax.xml.namespace.QName(
+                        "http://ws.apache.org/axis2", "enviarMissatgeReserva")),
+                new javax.xml.namespace.QName("http://ws.apache.org/axis2",
                     "enviarMissatgeReserva"));
 
         //adding SOAP soap_headers
@@ -229,18 +229,9 @@ public class ServeiMissatgeriaStub extends org.apache.axis2.client.Stub {
         return null;
     }
 
-    //http://localhost:8080//services/ServeiMissatgeria
-    public static class ExtensionMapper {
-        public static java.lang.Object getTypeObject(
-            java.lang.String namespaceURI, java.lang.String typeName,
-            javax.xml.stream.XMLStreamReader reader) throws java.lang.Exception {
-            throw new org.apache.axis2.databinding.ADBException(
-                "Unsupported type " + namespaceURI + " " + typeName);
-        }
-    }
-
+    //http://localhost:8080/axis2/services/ServeiMissatgeria
     public static class EnviarMissatgeReserva implements org.apache.axis2.databinding.ADBBean {
-        public static final javax.xml.namespace.QName MY_QNAME = new javax.xml.namespace.QName("http://null",
+        public static final javax.xml.namespace.QName MY_QNAME = new javax.xml.namespace.QName("http://ws.apache.org/axis2",
                 "enviarMissatgeReserva", "ns1");
 
         /**
@@ -511,7 +502,7 @@ public class ServeiMissatgeriaStub extends org.apache.axis2.client.Stub {
 
             if (serializeType) {
                 java.lang.String namespacePrefix = registerPrefix(xmlWriter,
-                        "http://null");
+                        "http://ws.apache.org/axis2");
 
                 if ((namespacePrefix != null) &&
                         (namespacePrefix.trim().length() > 0)) {
@@ -526,7 +517,7 @@ public class ServeiMissatgeriaStub extends org.apache.axis2.client.Stub {
             }
 
             if (localNomRecursTracker) {
-                namespace = "http://null";
+                namespace = "http://ws.apache.org/axis2";
                 writeStartElement(null, namespace, "nomRecurs", xmlWriter);
 
                 if (localNomRecurs == null) {
@@ -542,7 +533,7 @@ public class ServeiMissatgeriaStub extends org.apache.axis2.client.Stub {
             }
 
             if (localDataTracker) {
-                namespace = "http://null";
+                namespace = "http://ws.apache.org/axis2";
                 writeStartElement(null, namespace, "data", xmlWriter);
 
                 if (localData == null) {
@@ -558,7 +549,7 @@ public class ServeiMissatgeriaStub extends org.apache.axis2.client.Stub {
                 xmlWriter.writeEndElement();
             }
 
-            namespace = "http://null";
+            namespace = "http://ws.apache.org/axis2";
             writeStartElement(null, namespace, "horaInici", xmlWriter);
 
             if (localHoraInici == java.lang.Integer.MIN_VALUE) {
@@ -571,7 +562,7 @@ public class ServeiMissatgeriaStub extends org.apache.axis2.client.Stub {
 
             xmlWriter.writeEndElement();
 
-            namespace = "http://null";
+            namespace = "http://ws.apache.org/axis2";
             writeStartElement(null, namespace, "horaFi", xmlWriter);
 
             if (localHoraFi == java.lang.Integer.MIN_VALUE) {
@@ -585,7 +576,7 @@ public class ServeiMissatgeriaStub extends org.apache.axis2.client.Stub {
             xmlWriter.writeEndElement();
 
             if (localUsernameTracker) {
-                namespace = "http://null";
+                namespace = "http://ws.apache.org/axis2";
                 writeStartElement(null, namespace, "username", xmlWriter);
 
                 if (localUsername == null) {
@@ -601,7 +592,7 @@ public class ServeiMissatgeriaStub extends org.apache.axis2.client.Stub {
             }
 
             if (localComentariTracker) {
-                namespace = "http://null";
+                namespace = "http://ws.apache.org/axis2";
                 writeStartElement(null, namespace, "comentari", xmlWriter);
 
                 if (localComentari == null) {
@@ -618,7 +609,7 @@ public class ServeiMissatgeriaStub extends org.apache.axis2.client.Stub {
 
             if (localEmailsTracker) {
                 if (localEmails != null) {
-                    namespace = "http://null";
+                    namespace = "http://ws.apache.org/axis2";
 
                     for (int i = 0; i < localEmails.length; i++) {
                         if (localEmails[i] != null) {
@@ -631,7 +622,7 @@ public class ServeiMissatgeriaStub extends org.apache.axis2.client.Stub {
                             xmlWriter.writeEndElement();
                         } else {
                             // write null attribute
-                            namespace = "http://null";
+                            namespace = "http://ws.apache.org/axis2";
                             writeStartElement(null, namespace, "emails",
                                 xmlWriter);
                             writeAttribute("xsi",
@@ -643,7 +634,8 @@ public class ServeiMissatgeriaStub extends org.apache.axis2.client.Stub {
                 } else {
                     // write the null attribute
                     // write null attribute
-                    writeStartElement(null, "http://null", "emails", xmlWriter);
+                    writeStartElement(null, "http://ws.apache.org/axis2",
+                        "emails", xmlWriter);
 
                     // write the nil attribute
                     writeAttribute("xsi",
@@ -658,7 +650,7 @@ public class ServeiMissatgeriaStub extends org.apache.axis2.client.Stub {
 
         private static java.lang.String generatePrefix(
             java.lang.String namespace) {
-            if (namespace.equals("http://null")) {
+            if (namespace.equals("http://ws.apache.org/axis2")) {
                 return "ns1";
             }
 
@@ -934,8 +926,9 @@ public class ServeiMissatgeriaStub extends org.apache.axis2.client.Stub {
                         reader.next();
 
                     if ((reader.isStartElement() &&
-                            new javax.xml.namespace.QName("http://null",
-                                "nomRecurs").equals(reader.getName())) ||
+                            new javax.xml.namespace.QName(
+                                "http://ws.apache.org/axis2", "nomRecurs").equals(
+                                reader.getName())) ||
                             new javax.xml.namespace.QName("", "nomRecurs").equals(
                                 reader.getName())) {
                         nillableValue = reader.getAttributeValue("http://www.w3.org/2001/XMLSchema-instance",
@@ -961,7 +954,8 @@ public class ServeiMissatgeriaStub extends org.apache.axis2.client.Stub {
                         reader.next();
 
                     if ((reader.isStartElement() &&
-                            new javax.xml.namespace.QName("http://null", "data").equals(
+                            new javax.xml.namespace.QName(
+                                "http://ws.apache.org/axis2", "data").equals(
                                 reader.getName())) ||
                             new javax.xml.namespace.QName("", "data").equals(
                                 reader.getName())) {
@@ -988,8 +982,9 @@ public class ServeiMissatgeriaStub extends org.apache.axis2.client.Stub {
                         reader.next();
 
                     if ((reader.isStartElement() &&
-                            new javax.xml.namespace.QName("http://null",
-                                "horaInici").equals(reader.getName())) ||
+                            new javax.xml.namespace.QName(
+                                "http://ws.apache.org/axis2", "horaInici").equals(
+                                reader.getName())) ||
                             new javax.xml.namespace.QName("", "horaInici").equals(
                                 reader.getName())) {
                         nillableValue = reader.getAttributeValue("http://www.w3.org/2001/XMLSchema-instance",
@@ -1020,8 +1015,9 @@ public class ServeiMissatgeriaStub extends org.apache.axis2.client.Stub {
                         reader.next();
 
                     if ((reader.isStartElement() &&
-                            new javax.xml.namespace.QName("http://null",
-                                "horaFi").equals(reader.getName())) ||
+                            new javax.xml.namespace.QName(
+                                "http://ws.apache.org/axis2", "horaFi").equals(
+                                reader.getName())) ||
                             new javax.xml.namespace.QName("", "horaFi").equals(
                                 reader.getName())) {
                         nillableValue = reader.getAttributeValue("http://www.w3.org/2001/XMLSchema-instance",
@@ -1052,8 +1048,9 @@ public class ServeiMissatgeriaStub extends org.apache.axis2.client.Stub {
                         reader.next();
 
                     if ((reader.isStartElement() &&
-                            new javax.xml.namespace.QName("http://null",
-                                "username").equals(reader.getName())) ||
+                            new javax.xml.namespace.QName(
+                                "http://ws.apache.org/axis2", "username").equals(
+                                reader.getName())) ||
                             new javax.xml.namespace.QName("", "username").equals(
                                 reader.getName())) {
                         nillableValue = reader.getAttributeValue("http://www.w3.org/2001/XMLSchema-instance",
@@ -1079,8 +1076,9 @@ public class ServeiMissatgeriaStub extends org.apache.axis2.client.Stub {
                         reader.next();
 
                     if ((reader.isStartElement() &&
-                            new javax.xml.namespace.QName("http://null",
-                                "comentari").equals(reader.getName())) ||
+                            new javax.xml.namespace.QName(
+                                "http://ws.apache.org/axis2", "comentari").equals(
+                                reader.getName())) ||
                             new javax.xml.namespace.QName("", "comentari").equals(
                                 reader.getName())) {
                         nillableValue = reader.getAttributeValue("http://www.w3.org/2001/XMLSchema-instance",
@@ -1106,8 +1104,9 @@ public class ServeiMissatgeriaStub extends org.apache.axis2.client.Stub {
                         reader.next();
 
                     if ((reader.isStartElement() &&
-                            new javax.xml.namespace.QName("http://null",
-                                "emails").equals(reader.getName())) ||
+                            new javax.xml.namespace.QName(
+                                "http://ws.apache.org/axis2", "emails").equals(
+                                reader.getName())) ||
                             new javax.xml.namespace.QName("", "emails").equals(
                                 reader.getName())) {
                         // Process the array and step past its final element's end.
@@ -1145,8 +1144,8 @@ public class ServeiMissatgeriaStub extends org.apache.axis2.client.Stub {
                                 loopDone7 = true;
                             } else {
                                 if (new javax.xml.namespace.QName(
-                                            "http://null", "emails").equals(
-                                            reader.getName())) {
+                                            "http://ws.apache.org/axis2",
+                                            "emails").equals(reader.getName())) {
                                     nillableValue = reader.getAttributeValue("http://www.w3.org/2001/XMLSchema-instance",
                                             "nil");
 
@@ -1187,5 +1186,14 @@ public class ServeiMissatgeriaStub extends org.apache.axis2.client.Stub {
                 return object;
             }
         } //end of factory class
+    }
+
+    public static class ExtensionMapper {
+        public static java.lang.Object getTypeObject(
+            java.lang.String namespaceURI, java.lang.String typeName,
+            javax.xml.stream.XMLStreamReader reader) throws java.lang.Exception {
+            throw new org.apache.axis2.databinding.ADBException(
+                "Unsupported type " + namespaceURI + " " + typeName);
+        }
     }
 }

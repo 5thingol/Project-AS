@@ -36,9 +36,12 @@ public class ServeiMissatgeriaAdapter implements IServeiMissatgeriaAdapter {
 
             // Executar la crida
             svMiss.enviarMissatgeReserva(enviarMissatge);
+
         } catch (AxisFault e) {
+            e.printStackTrace();
             throw new ServeiNoDisponible();
         } catch (RemoteException e) {
+            e.printStackTrace();
             throw  new ServeiNoDisponible();
         }
     }

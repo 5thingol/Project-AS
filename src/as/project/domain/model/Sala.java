@@ -9,7 +9,7 @@ import javax.persistence.*;
  * Created by romabejar on 08/06/16.
  */
 @Entity
-@Table(name= "as.project.domain.model.Sala" )
+@Table(name= "sala" )
 @PrimaryKeyJoinColumn(name="nom")
 public class Sala extends Recurs {
 

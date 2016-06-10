@@ -7,7 +7,7 @@ import java.util.*;
  * Created by guillemc on 05/04/2016.
  */
 @Entity
-@Table(name = "as.project.domain.model.Usuari")
+@Table(name = "usuari")
 public class Usuari {
 
     @Id

@@ -20,8 +20,7 @@ public class ServiceLocator {
         return instance;
     }
 
-    // TODO: return service reference
-    public ServeiMissatgeriaStub find(String service) throws AxisFault{
+    public ServeiMissatgeriaStub find(String service) throws AxisFault {
         if (service.equals("ServeiMissatgeria")) {
             return new ServeiMissatgeriaStub();
         }

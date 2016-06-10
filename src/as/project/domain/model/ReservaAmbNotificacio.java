@@ -9,7 +9,7 @@ import java.util.Set;
  * Created by eduard on 07/06/2016.
  */
 @Entity
-@Table(name= "as.project.domain.model.ReservaAmbNotificacio")
+@Table(name= "reservaAmbNotificacio")
 @AttributeOverrides({
         @AttributeOverride(name="recurs", column=@Column(name="recurs_id")),
         @AttributeOverride(name="data", column=@Column(name="data")),

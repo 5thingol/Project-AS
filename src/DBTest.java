@@ -1,33 +1,115 @@
-import as.project.datalayer.HibernateUtil;
-import as.project.domain.model.Recurs;
-import as.project.domain.model.Reserva;
-import as.project.domain.model.Usuari;
+import as.project.datalayer.FactoriaDades;
+import as.project.domain.controllers.CtrlConsultarRecursosDisponiblesPerData;
+import as.project.domain.controllers.CtrlCrearReservaAmbNotificacio;
+import as.project.domain.model.*;
 import org.hibernate.Session;
+
+import javax.mail.Message;
+import javax.mail.PasswordAuthentication;
+import javax.mail.Transport;
+import javax.mail.internet.InternetAddress;
+import javax.mail.internet.MimeMessage;
 import java.sql.*;
+import java.util.*;
 import java.util.Date;
-import java.util.List;
-import java.util.Scanner;
 
 /**
  * Created by eduard on 17/04/16.
  */
 public class DBTest {
+    public static void enviarMissatgeReserva(String nomRecurs, Date data, int horaInici, int horaFi, String username, String comentari, List<String> emails) {
 
-    public static void main(String[] args) throws SQLException{
+        String from = "guillem.cordoba@gmail.com";
+
+        // Assuming you are sending email from localhost
+        String host = "smtp.upc.edu";
+
+        // Get system properties
+        Properties properties = System.getProperties();
+
+        // Setup mail server
+        properties.put("mail.smtp.auth", "true");
+        properties.put("mail.smtp.starttls.enable", "true");
+        properties.setProperty("mail.smtp.host", host);
+        properties.put("mail.smtp.port", "587");
+
+        // Get the default Session object.
+        javax.mail.Session session = javax.mail.Session.getDefaultInstance(properties,
+                new javax.mail.Authenticator() {
+                    protected PasswordAuthentication getPasswordAuthentication() {
+                        return new PasswordAuthentication("guillem.cordoba@est.fib.upc.edu", "5TH1NG0l");
+                    }
+                });
+
+
+        //javax.mail.Session session = javax.mail.Session.getDefaultInstance(properties, null);
+
+        for (String email : emails) {
+
+            try {
+                // Create a default MimeMessage object.
+                MimeMessage message = new MimeMessage(session);
+
+                // Set From: header field of the header.
+                message.setFrom(new InternetAddress(from));
+
+                // Set To: header field of the header.
+                message.addRecipient(Message.RecipientType.TO, new InternetAddress(email));
+
+                // Set Subject: header field
+                message.setSubject("Nova reserva!");
+
+                // Now set the actual message
+                message.setText("Tens programada una nova reserva. Aquestes són les seves dades: \n \n    Nom del recurs: " +
+                        nomRecurs + "\n    Data: " + data + "\n    Hora d'inici: " + horaInici + "\n    Hora fi: " + horaFi +
+                        "\n    Usuari creador: " + username + "\n    Comentari: " + comentari);
+
+                // Send message
+                Transport.send(message);
+            } catch (Exception mex) {
+                mex.printStackTrace();
+            }
+
+        }
+    }
+
+    public static void main(String[] args) throws Exception{
         addData();
 
+        FactoriaDades.getInstance().openSession();
+        Session session = FactoriaDades.getInstance().getCurrentSession();
+        session.beginTransaction();
+
+        //CtrlConsultarRecursosDisponiblesPerData ctrl1 = new CtrlConsultarRecursosDisponiblesPerData();
+        Date d = new Date();
+        CtrlCrearReservaAmbNotificacio ctrl2 = new CtrlCrearReservaAmbNotificacio();
+        List<InfoRecurs> recursos = ctrl2.obteRecursosDisponibles(d, 0, 23);
+        ctrl2.creaReservaAmbNotificacio(recursos.get(0).getNom(),"usuari1","Reserva molt maca");
+
+        session.getTransaction().commit();
+        FactoriaDades.getInstance().closeSession();
+
+        List<String> emails = new ArrayList<>();
+        emails.add("guillem.cordoba@est.fib.upc.edu");
+        //enviarMissatgeReserva(recursos.get(0).getNom(),d,0,23,"usuari1","bueenaas",emails);
+        //} catch (Exception e) {
+        //    System.out.println("Excepcio: " + e.getMessage());
+        //}
+        /*
         printMenu();
         Scanner scanner = new Scanner(System.in);
+
 
         while(scanner.hasNext()) {
             String option = scanner.next();
             switch (option) {
                 case "1":
-                    Session session = HibernateUtil.getSessionFactory().openSession();
+                    FactoriaDades.getInstance().openSession();
+                    Session session = FactoriaDades.getInstance().getCurrentSession();
 
                     List<Reserva> reserves = session.createCriteria(Reserva.class).list();
 
-                    session.close();
+                    FactoriaDades.getInstance().closeSession();
 
                     for (int i = 0; i < reserves.size(); i++) {
                         Reserva aux = reserves.get(i);
@@ -40,11 +122,12 @@ public class DBTest {
                     }
                     break;
                 case "2":
-                    session = HibernateUtil.getSessionFactory().openSession();
+                    FactoriaDades.getInstance().openSession();
+                    session = FactoriaDades.getInstance().getCurrentSession();
 
                     List<Usuari> usuaris = session.createCriteria(Usuari.class).list();
 
-                    session.close();
+                    FactoriaDades.getInstance().closeSession();
 
                     for (int i = 0; i < usuaris.size(); i++) {
                         Usuari aux = usuaris.get(i);
@@ -62,6 +145,7 @@ public class DBTest {
             }
             printMenu();
         }
+        */
     }
 
     static void printMenu() {
@@ -73,11 +157,12 @@ public class DBTest {
 
     static void addData() {
 
-        Recurs recurs = new Recurs();
+        Projector recurs = new Projector();
         recurs.setNom("Projector");
+        recurs.setResolucio("800x600");
 
         Usuari u1 = new Usuari();
-        u1.setEmail("usuari.1@est.fib.upc.edu");
+        u1.setEmail("guillem.cordoba@est.fib.upc.edu");
         u1.setNom("as.project.domain.model.Usuari 1");
         u1.setUsername("usuari1");
 
@@ -93,7 +178,7 @@ public class DBTest {
         r1.setHoraFi(10);
         r1.setComentari("Comment1");
         r1.setUsuariCreador(u1);
-        u1.assignaReserva(r1);
+        //u1.assignaReserva(r1);
 
         Reserva r2 = new Reserva();
         r2.setRecurs(recurs);
@@ -102,9 +187,10 @@ public class DBTest {
         r2.setHoraFi(19);
         r2.setComentari("Comment2");
         r2.setUsuariCreador(u2);
-        u2.assignaReserva(r2);
+        //u2.assignaReserva(r2);
 
-        Session session = HibernateUtil.getSessionFactory().openSession();
+        FactoriaDades.getInstance().openSession();
+        Session session = FactoriaDades.getInstance().getCurrentSession();
         session.beginTransaction();
 
         session.save(recurs);
@@ -114,6 +200,6 @@ public class DBTest {
         session.save(r2);
 
         session.getTransaction().commit();
-        session.close();
+        FactoriaDades.getInstance().closeSession();
     }
 }

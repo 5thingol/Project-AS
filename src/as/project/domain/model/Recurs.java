@@ -5,10 +5,8 @@ import javax.persistence.*;
 /**
  * Created by guillemc on 19/04/2016.
  */
-// Aixo es una primera versio de la classe recurs perque compili tot
-// TO-DO: CANVIAR TOT PER LA SEGUENT ENTREGA!
 @Entity
-@Table(name= "as.project.domain.model.Recurs" )
+@Table(name= "recurs" )
 @Inheritance(strategy=InheritanceType.JOINED)
 public abstract class Recurs {
 

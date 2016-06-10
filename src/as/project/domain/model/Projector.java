@@ -6,7 +6,7 @@ import javax.persistence.*;
  * Created by romabejar on 08/06/16.
  */
 @Entity
-@Table(name= "as.project.domain.model.Projector" )
+@Table(name= "projector" )
 @PrimaryKeyJoinColumn(name="nom")
 public class Projector extends Recurs {
 

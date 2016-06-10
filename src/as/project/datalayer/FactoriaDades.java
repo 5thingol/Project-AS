@@ -59,6 +59,10 @@ public class FactoriaDades {
         currentSession = sessionFactory.openSession();
     }
 
+    public void closeSession() {
+        currentSession.close();
+    }
+
     public Session getCurrentSession() {
         return currentSession;
     }
