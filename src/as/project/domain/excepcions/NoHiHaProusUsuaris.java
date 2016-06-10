@@ -12,6 +12,5 @@ public class NoHiHaProusUsuaris extends Exception {
         public NoHiHaProusUsuaris() {
             super();
         }
-
-    }
+    
 }

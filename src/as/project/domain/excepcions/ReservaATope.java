@@ -13,5 +13,4 @@ public class ReservaATope extends Exception {
             super();
         }
 
-    }
 }
