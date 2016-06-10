@@ -1,8 +1,6 @@
 package as.project.domain.model;
 
-import javax.persistence.Entity;
-import javax.persistence.OneToMany;
-import javax.persistence.Table;
+import javax.persistence.*;
 import java.util.Date;
 import java.util.HashSet;
 import java.util.Set;
@@ -11,7 +9,14 @@ import java.util.Set;
  * Created by eduard on 07/06/2016.
  */
 @Entity
-@Table(name= "as.project.domain.model.Sala" )
+@Table(name= "as.project.domain.model.Sala")
+@AttributeOverrides({
+        @AttributeOverride(name="recurs", column=@Column(name="recurs_id")),
+        @AttributeOverride(name="data", column=@Column(name="data")),
+        @AttributeOverride(name="horaInici", column=@Column(name="hora_inici")),
+        @AttributeOverride(name="horaFi", column=@Column(name="hora_fi")),
+        @AttributeOverride(name="comentari", column=@Column(name="comentari"))
+})
 public class ReservaAmbNotificacio extends Reserva {
 
     @OneToMany

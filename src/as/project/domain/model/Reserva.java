@@ -9,6 +9,7 @@ import java.util.Date;
  */
 @Entity
 @Table(name = "as.project.domain.model.Reserva")
+@Inheritance(strategy = InheritanceType.TABLE_PER_CLASS)
 public class Reserva implements java.io.Serializable {
 
    /* @Id
