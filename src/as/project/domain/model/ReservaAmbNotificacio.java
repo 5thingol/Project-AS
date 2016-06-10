@@ -9,13 +9,14 @@ import java.util.Set;
  * Created by eduard on 07/06/2016.
  */
 @Entity
-@Table(name= "as.project.domain.model.Sala")
+@Table(name= "as.project.domain.model.ReservaAmbNotificacio")
 @AttributeOverrides({
         @AttributeOverride(name="recurs", column=@Column(name="recurs_id")),
         @AttributeOverride(name="data", column=@Column(name="data")),
         @AttributeOverride(name="horaInici", column=@Column(name="hora_inici")),
         @AttributeOverride(name="horaFi", column=@Column(name="hora_fi")),
-        @AttributeOverride(name="comentari", column=@Column(name="comentari"))
+        @AttributeOverride(name="comentari", column=@Column(name="comentari")),
+        @AttributeOverride(name="usuari_id", column=@Column(name="usuari_id"))
 })
 public class ReservaAmbNotificacio extends Reserva {
 

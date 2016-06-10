@@ -41,6 +41,7 @@ public class Reserva implements java.io.Serializable {
     private String comentari;
 
     @ManyToOne
+    @JoinColumn(name = "usuari_id", referencedColumnName = "username")
     private Usuari usuariCreador;
 
 

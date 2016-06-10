@@ -7,7 +7,7 @@ import java.util.*;
  * Created by guillemc on 05/04/2016.
  */
 @Entity
-@Table(name = "USUARI")
+@Table(name = "as.project.domain.model.Usuari")
 public class Usuari {
 
     @Id
@@ -20,20 +20,21 @@ public class Usuari {
     @Column(name = "email")
     private String email;
 
-    @OneToMany(mappedBy="usuariCreador")
-    private Set<Reserva> reservesCreades;
+    //@OneToMany(mappedBy="usuariCreador")
+    //private Set<Reserva> reservesCreades;
 
     // CONSTRUCTORS
 
     public Usuari() {
-        reservesCreades = new HashSet<Reserva>();
+
+        //reservesCreades = new HashSet<Reserva>();
     }
 
     public Usuari(String username, String nom, String email) {
         this.username = username;
         this.nom = nom;
         this.email = email;
-        reservesCreades = new HashSet<Reserva>();
+        //reservesCreades = new HashSet<Reserva>();
     }
 
     // GETTERS & SETTERS
@@ -62,9 +63,9 @@ public class Usuari {
         this.email = email;
     }
 
-    public Set<Reserva> getReservesCreades() { return reservesCreades; }
+    //public Set<Reserva> getReservesCreades() { return reservesCreades; }
 
-    public void setReservesCreades(Set<Reserva> reservesCreades) { this.reservesCreades = reservesCreades; }
+    //public void setReservesCreades(Set<Reserva> reservesCreades) { this.reservesCreades = reservesCreades; }
 
     // FUNCIONS DE LA CLASSE
 
@@ -76,6 +77,9 @@ public class Usuari {
         return new InfoUsuari(username, nom, email);
     }
 
+    /** CANVIAT: COMENTAT PERQUE EN PRINCIPI NO NECESSITEM LES RESERVES CREADES DE L'USUARI, SI NO PODEM FER EL TRIGGER
+     * SHA DE DESCOMENTAR
+     */
     /**
      * Comprova si l'usuari ja te reservada una altra sala en un periode que se solapa amb l'indicat
      * @param data: la data del periode que es vol comprovar
@@ -83,7 +87,7 @@ public class Usuari {
      * @param horaFi: l'hora de fi del periode que es vol comprovar
      * @return true si l'usuari te una reserva d'una sala que se solapa amb el periode,
      * false en qualsevol altre cas
-     */
+
     public boolean usuariSolapaReservaDeSala(Date data, int horaInici, int horaFi) {
         Boolean salaSolapada = false;
 
@@ -99,8 +103,11 @@ public class Usuari {
     /**
      * Afegeix la reserva passada com a parametre a la llista de reserves creades per l'usuari
      * @param reserva: la reserva que s'afegira a les reserves creades per l'usuari
-     */
+
     public void assignaReserva(Reserva reserva) {
         reservesCreades.add(reserva);
     }
+
+
+    **/
 }

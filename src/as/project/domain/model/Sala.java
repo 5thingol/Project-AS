@@ -10,6 +10,7 @@ import javax.persistence.*;
  */
 @Entity
 @Table(name= "as.project.domain.model.Sala" )
+@PrimaryKeyJoinColumn(name="nom")
 public class Sala extends Recurs {
 
     @Column(name = "aforament")

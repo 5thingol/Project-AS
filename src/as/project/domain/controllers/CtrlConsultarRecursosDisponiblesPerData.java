@@ -1,7 +1,6 @@
 package as.project.domain.controllers;
 
 import as.project.datalayer.FactoriaDades;
-import as.project.datalayer.HibernateUtil;
 import as.project.domain.excepcions.NoHiHaRecursos;
 import as.project.domain.model.InfoRecurs;
 import as.project.domain.model.Recurs;

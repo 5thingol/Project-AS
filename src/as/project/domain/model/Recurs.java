@@ -9,6 +9,7 @@ import javax.persistence.*;
 // TO-DO: CANVIAR TOT PER LA SEGUENT ENTREGA!
 @Entity
 @Table(name= "as.project.domain.model.Recurs" )
+@Inheritance(strategy=InheritanceType.JOINED)
 public abstract class Recurs {
 
     @Id
