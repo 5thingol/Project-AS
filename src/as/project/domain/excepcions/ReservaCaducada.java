@@ -13,5 +13,4 @@ public class ReservaCaducada extends Exception {
             super();
         }
 
-    }
 }

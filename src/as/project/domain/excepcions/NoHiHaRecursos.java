@@ -13,5 +13,4 @@ public class NoHiHaRecursos extends Exception {
             super();
         }
 
-    }
 }
