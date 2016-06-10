@@ -1,8 +1,6 @@
 package as.project.datalayer;
 
-import as.project.domain.model.Recurs;
-import as.project.domain.model.Reserva;
-import as.project.domain.model.Usuari;
+import as.project.domain.model.*;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.hibernate.cfg.Configuration;
@@ -21,7 +19,11 @@ public class FactoriaDades {
             // Create the SessionFactory from hibernate.cfg.xml
             Configuration configuration = new Configuration();
             configuration.addAnnotatedClass(Recurs.class);
+            configuration.addAnnotatedClass(Sala.class);
+            configuration.addAnnotatedClass(Ordinador.class);
+            configuration.addAnnotatedClass(Projector.class);
             configuration.addAnnotatedClass(Reserva.class);
+            configuration.addAnnotatedClass(ReservaAmbNotificacio.class);
             configuration.addAnnotatedClass(Usuari.class);
             configuration.configure("hibernate.cfg.xml");
 

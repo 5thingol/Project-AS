@@ -20,7 +20,14 @@ import java.util.Set;
 })
 public class ReservaAmbNotificacio extends Reserva {
 
-    @OneToMany
+    @OneToMany(cascade = CascadeType.ALL)
+    @JoinTable(
+            name = "ES_NOTIFICA",
+            joinColumns = {@JoinColumn(name = "recurs_id"),
+            @JoinColumn(name = "data"),
+            @JoinColumn(name = "hora_inici")},
+            inverseJoinColumns = @JoinColumn(name = "username")
+    )
     private Set<Usuari> usuarisNotificats = new HashSet<Usuari>();
 
     public ReservaAmbNotificacio() {}
