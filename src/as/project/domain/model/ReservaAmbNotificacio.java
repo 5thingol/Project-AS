@@ -3,6 +3,7 @@ package as.project.domain.model;
 import javax.persistence.Entity;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
+import java.util.Date;
 import java.util.HashSet;
 import java.util.Set;
 
@@ -15,6 +16,10 @@ public class ReservaAmbNotificacio extends Reserva {
 
     @OneToMany
     private Set<Usuari> usuarisNotificats = new HashSet<Usuari>();
+
+    public ReservaAmbNotificacio(Recurs recurs, Date data, int horaInici, int horaFi, String comentari, Usuari usuariCreador) {
+        inicialitza(recurs, data, horaInici, horaFi, comentari, usuariCreador);
+    }
 
     public int getNumUsuarisNotificats() { return usuarisNotificats.size(); }
 
