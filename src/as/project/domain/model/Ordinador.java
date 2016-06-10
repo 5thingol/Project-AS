@@ -1,7 +1,6 @@
 package as.project.domain.model;
 
 import javax.persistence.*;
-import javax.ws.rs.ext.Provider;
 
 /**
  * Created by romabejar on 08/06/16.
