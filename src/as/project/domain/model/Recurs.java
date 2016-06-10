@@ -33,4 +33,12 @@ public abstract class Recurs {
     public boolean recEsSala() {
         return false;
     }
+
+    public abstract InfoRecurs getExtraInfo();
+
+    public InfoRecurs getInfo() {
+        InfoRecurs info = getExtraInfo();
+        info.setNom(nom);
+        return info;
+    }
 }
