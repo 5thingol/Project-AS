@@ -23,6 +23,8 @@ public class ReservaAmbNotificacio extends Reserva {
     @OneToMany
     private Set<Usuari> usuarisNotificats = new HashSet<Usuari>();
 
+    public ReservaAmbNotificacio() {}
+
     public ReservaAmbNotificacio(Recurs recurs, Date data, int horaInici, int horaFi, String comentari, Usuari usuariCreador) {
         inicialitza(recurs, data, horaInici, horaFi, comentari, usuariCreador);
     }
