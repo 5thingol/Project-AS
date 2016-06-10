@@ -4,15 +4,13 @@ import as.project.datalayer.FactoriaDades;
 import as.project.domain.excepcions.NoHiHaProusUsuaris;
 import as.project.domain.excepcions.NoHiHaRecursos;
 import as.project.domain.excepcions.ReservaATope;
-import as.project.domain.model.ReservaAmbNotificacio;
-import as.project.domain.model.Usuari;
+import as.project.domain.excepcions.ServeiNoDisponible;
+import as.project.domain.model.*;
 import as.project.domain.services.adapters.FactoriaAdapters;
 import as.project.domain.services.adapters.IServeiMissatgeriaAdapter;
 import org.hibernate.Session;
 
-import java.util.ArrayList;
-import java.util.Date;
-import java.util.List;
+import java.util.*;
 
 /**
  * Created by guillemc on 07/06/2016.
@@ -29,33 +27,35 @@ public class CtrlCrearReservaAmbNotificacio {
 
     private CtrlAssignarUsuarisANotificarUnaReserva instanciaCtrlAssignar;
 
-    public List<List<String>> obteRecursosDisponibles(Date data, int horaInici, int horaFi) throws NoHiHaRecursos {
+    public List<InfoRecurs> obteRecursosDisponibles(Date data, int horaInici, int horaFi) throws NoHiHaRecursos {
         CtrlConsultarRecursosDisponiblesPerData ctrlConsultarRecursos = new CtrlConsultarRecursosDisponiblesPerData();
-        ctrlConsultarRecursos.obteRecursosDisponiblesPerData(data, horaInici, horaFi);
+        List<InfoRecurs> infosRecursos = ctrlConsultarRecursos.obteRecursosDisponiblesPerData(data, horaInici, horaFi);
 
         this.data = data;
         this.horaInici = horaInici;
         this.horaFi = horaFi;
+
+        return infosRecursos;
     }
 
-    public void creaReservaAmbNotificacio(String nomRecurs, String username, String comentari) {
+    public void creaReservaAmbNotificacio(String nomRecurs, String username, String comentari) throws ServeiNoDisponible {
 
         // Obtenim la sessió actual
         Session session = FactoriaDades.getInstance().getCurrentSession();
 
         Usuari usuari = (Usuari) session.get(Usuari.class, username);
-        // Recurs recurs = (Recurs) session.get(Recurs.class, nomRecurs);
+        Recurs recurs = (Recurs) session.get(Recurs.class, nomRecurs);
 
         // TODO: SI NO S'ACONSEGUEIX IMPLEMENTAR EL TRIGGER DE L'EXCEPCIÓ RECURSSALASOLAPADA, SE N'HA D'IMPLEMENTAR
         // LA LÒGICA AQUÍ
 
         // Crea la nova reserva amb notificació i hi afegeix l'usuari creador
-        ReservaAmbNotificacio ran = new ReservaAmbNotificacio(nomRecurs, data, horaInici, horaFi, comentari, usuari);
+        ReservaAmbNotificacio ran = new ReservaAmbNotificacio(recurs, data, horaInici, horaFi, comentari, usuari);
 
         // TODO: SI NO S'ACONSEGUEIX IMPLEMENTAR EL TRIGGER DE L'EXCEPCIÓ RECURSSALASOLAPADA,
         // S'HA D'AFEGIR LA RESERVA A L'USUARI AQUÍ
 
-        List<Usuari> usuaris = new ArrayList<>();
+        Set<Usuari> usuaris = new HashSet<>();
         usuaris.add(usuari);
 
         ran.afegeixUsuaris(usuaris);
@@ -73,10 +73,10 @@ public class CtrlCrearReservaAmbNotificacio {
 
     }
 
-    public List<List<String>> obteUsuarisPerAssignar() throws NoHiHaProusUsuaris {
+    public List<InfoUsuari> obteUsuarisPerAssignar() throws NoHiHaProusUsuaris {
         // Salvem la instància del controlador per a poder-lo fer servir en la funció assignarUsuarisAReserva
         instanciaCtrlAssignar = new CtrlAssignarUsuarisANotificarUnaReserva();
-        List<List<String>> result = null;
+        List<InfoUsuari> result = null;
         try {
             result = instanciaCtrlAssignar.obteUsuarisAAssignar(nomRecurs, data, horaInici);
         } catch (NoHiHaProusUsuaris e) {

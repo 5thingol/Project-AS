@@ -13,5 +13,4 @@ public class ServeiNoDisponible extends Exception {
             super();
         }
 
-    }
 }

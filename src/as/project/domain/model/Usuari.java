@@ -72,12 +72,8 @@ public class Usuari {
      * Obte la informacio de l'usuari
      * @return una llista amb els seguents strings, per ordre: l'username, el nom i l'email de l'usuari
      */
-    public List<String> getInfo() {
-        List<String> info = new ArrayList<String>();
-        info.add(username);
-        info.add(nom);
-        info.add(email);
-        return info;
+    public InfoUsuari getInfo() {
+        return new InfoUsuari(username, nom, email);
     }
 
     /**
