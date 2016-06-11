@@ -15,7 +15,7 @@ import java.util.*;
 /**
  * Created by guillemc on 07/06/2016.
  */
-public class CtrlCrearReservaAmbNotificacio {
+public class CtrlCasDUsCrearReservaAmbNotificacio {
 
     private Date data;
     private int horaInici;
@@ -25,10 +25,10 @@ public class CtrlCrearReservaAmbNotificacio {
     private String username;
     private String email;
 
-    private CtrlAssignarUsuarisANotificarUnaReserva instanciaCtrlAssignar;
+    private CtrlCasDUsAssignarUsuarisANotificarUnaReserva instanciaCtrlAssignar;
 
     public List<InfoRecurs> obteRecursosDisponibles(Date data, int horaInici, int horaFi) throws NoHiHaRecursos {
-        CtrlConsultarRecursosDisponiblesPerData ctrlConsultarRecursos = new CtrlConsultarRecursosDisponiblesPerData();
+        CtrlCasDUsConsultarRecursosDisponiblesPerData ctrlConsultarRecursos = new CtrlCasDUsConsultarRecursosDisponiblesPerData();
         List<InfoRecurs> infosRecursos = ctrlConsultarRecursos.obteRecursosDisponiblesPerData(data, horaInici, horaFi);
 
         this.data = data;
@@ -69,13 +69,17 @@ public class CtrlCrearReservaAmbNotificacio {
         emails.add(usuari.getEmail());
 
         IServeiMissatgeriaAdapter adapter = FactoriaAdapters.getInstance().getServeiMissatgeriaAdapter();
-        adapter.enviarDadesReserva(nomRecurs, data, horaInici, horaFi, usuari.getUsername(), comentari, emails);
+        adapter.enviarDadesReserva(nomRecurs, data, horaInici, horaFi, username, comentari, emails);
 
+        this.nomRecurs = nomRecurs;
+        this.comentari = comentari;
+        this.username = username;
+        this.email = usuari.getEmail();
     }
 
     public List<InfoUsuari> obteUsuarisPerAssignar() throws NoHiHaProusUsuaris {
         // Salvem la instància del controlador per a poder-lo fer servir en la funció assignarUsuarisAReserva
-        instanciaCtrlAssignar = new CtrlAssignarUsuarisANotificarUnaReserva();
+        instanciaCtrlAssignar = new CtrlCasDUsAssignarUsuarisANotificarUnaReserva();
         List<InfoUsuari> result = null;
         try {
             result = instanciaCtrlAssignar.obteUsuarisAAssignar(nomRecurs, data, horaInici);

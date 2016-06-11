@@ -1,6 +1,5 @@
 import as.project.datalayer.FactoriaDades;
-import as.project.domain.controllers.CtrlConsultarRecursosDisponiblesPerData;
-import as.project.domain.controllers.CtrlCrearReservaAmbNotificacio;
+import as.project.domain.controllers.CtrlCasDUsCrearReservaAmbNotificacio;
 import as.project.domain.model.*;
 import org.hibernate.Session;
 
@@ -9,7 +8,6 @@ import javax.mail.PasswordAuthentication;
 import javax.mail.Transport;
 import javax.mail.internet.InternetAddress;
 import javax.mail.internet.MimeMessage;
-import java.sql.*;
 import java.util.*;
 import java.util.Date;
 
@@ -80,9 +78,9 @@ public class DBTest {
         Session session = FactoriaDades.getInstance().getCurrentSession();
         session.beginTransaction();
 
-        //CtrlConsultarRecursosDisponiblesPerData ctrl1 = new CtrlConsultarRecursosDisponiblesPerData();
+        //CtrlCasDUsConsultarRecursosDisponiblesPerData ctrl1 = new CtrlCasDUsConsultarRecursosDisponiblesPerData();
         Date d = new Date();
-        CtrlCrearReservaAmbNotificacio ctrl2 = new CtrlCrearReservaAmbNotificacio();
+        CtrlCasDUsCrearReservaAmbNotificacio ctrl2 = new CtrlCasDUsCrearReservaAmbNotificacio();
         List<InfoRecurs> recursos = ctrl2.obteRecursosDisponibles(d, 0, 23);
         ctrl2.creaReservaAmbNotificacio(recursos.get(0).getNom(),"usuari1","Reserva molt maca");
 

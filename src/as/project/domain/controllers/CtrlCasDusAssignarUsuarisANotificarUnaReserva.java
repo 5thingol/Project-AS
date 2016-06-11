@@ -12,7 +12,7 @@ import java.util.*;
 /**
  * Created by guillemc on 07/06/2016.
  */
-public class CtrlAssignarUsuarisANotificarUnaReserva {
+public class CtrlCasDUsAssignarUsuarisANotificarUnaReserva {
 
     private String nomRecurs;
     private Date data;
