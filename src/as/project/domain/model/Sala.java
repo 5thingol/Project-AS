@@ -53,6 +53,14 @@ public class Sala extends Recurs {
         this.ubicacio = ubicacio;
     }
 
+    public Ordinador getOrdinador() { return ordinador; }
+
+    public void setOrdinador(Ordinador o ) { this.ordinador = o; }
+
+    public Projector getProjector() { return projector; }
+
+    public void setProjector(Projector o ) { this.projector = o; }
+
     @Override
     public boolean recEsSala(){
         return true;
