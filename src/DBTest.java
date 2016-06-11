@@ -82,13 +82,14 @@ public class DBTest {
         Date d = new Date();
         CtrlCasDUsCrearReservaAmbNotificacio ctrl2 = new CtrlCasDUsCrearReservaAmbNotificacio();
         List<InfoRecurs> recursos = ctrl2.obteRecursosDisponibles(d, 0, 23);
-        ctrl2.creaReservaAmbNotificacio(recursos.get(0).getNom(),"usuari1","Reserva molt maca");
+        //ctrl2.creaReservaAmbNotificacio(recursos.get(0).getNom(),"usuari1","Reserva molt maca");
+
+        Sala sala = new Sala("hola",10,"",null,null);
+        session.save(sala);
 
         session.getTransaction().commit();
         FactoriaDades.getInstance().closeSession();
 
-        List<String> emails = new ArrayList<>();
-        emails.add("guillem.cordoba@est.fib.upc.edu");
         //enviarMissatgeReserva(recursos.get(0).getNom(),d,0,23,"usuari1","bueenaas",emails);
         //} catch (Exception e) {
         //    System.out.println("Excepcio: " + e.getMessage());

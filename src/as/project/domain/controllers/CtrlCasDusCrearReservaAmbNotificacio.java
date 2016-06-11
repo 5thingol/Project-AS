@@ -1,11 +1,9 @@
 package as.project.domain.controllers;
 
 import as.project.datalayer.FactoriaDades;
-import as.project.domain.excepcions.NoHiHaProusUsuaris;
-import as.project.domain.excepcions.NoHiHaRecursos;
-import as.project.domain.excepcions.ReservaATope;
-import as.project.domain.excepcions.ServeiNoDisponible;
+import as.project.domain.excepcions.*;
 import as.project.domain.model.*;
+import as.project.domain.services.ServeiMissatgeriaStub;
 import as.project.domain.services.adapters.FactoriaAdapters;
 import as.project.domain.services.adapters.IServeiMissatgeriaAdapter;
 import org.hibernate.Session;
@@ -38,7 +36,7 @@ public class CtrlCasDUsCrearReservaAmbNotificacio {
         return infosRecursos;
     }
 
-    public void creaReservaAmbNotificacio(String nomRecurs, String username, String comentari) throws ServeiNoDisponible {
+    public void creaReservaAmbNotificacio(String nomRecurs, String username, String comentari) throws RecursSalaSolapada, UsuariNoExisteix, ServeiNoDisponible {
 
         // Obtenim la sessió actual
         Session session = FactoriaDades.getInstance().getCurrentSession();
@@ -55,10 +53,12 @@ public class CtrlCasDUsCrearReservaAmbNotificacio {
         // TODO: SI NO S'ACONSEGUEIX IMPLEMENTAR EL TRIGGER DE L'EXCEPCIÓ RECURSSALASOLAPADA,
         // S'HA D'AFEGIR LA RESERVA A L'USUARI AQUÍ
 
+        /*
         Set<Usuari> usuaris = new HashSet<>();
         usuaris.add(usuari);
 
         ran.afegeixUsuaris(usuaris);
+        */
 
         // Guarda la nova reserva amb notificació
         session.save(ran);
@@ -90,7 +90,7 @@ public class CtrlCasDUsCrearReservaAmbNotificacio {
         return result;
     }
 
-    public void assignarUsuarisAReserva(List<String> usuarisUsernames) throws ReservaATope {
+    public void assignarUsuarisAReserva(List<String> usuarisUsernames) throws ReservaATope, ServeiNoDisponible {
         instanciaCtrlAssignar.afegirUsuarisAReserva(usuarisUsernames);
     }
 

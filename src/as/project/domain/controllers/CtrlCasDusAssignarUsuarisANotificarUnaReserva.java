@@ -67,7 +67,7 @@ public class CtrlCasDUsAssignarUsuarisANotificarUnaReserva {
         return usuarisAAssignar;
     }
 
-    public void afegirUsuarisAReserva(List<String> usernames) throws ReservaATope {
+    public void afegirUsuarisAReserva(List<String> usernames) throws ReservaATope, ServeiNoDisponible {
 
         // Obtenim la sessió actual
         Session session = FactoriaDades.getInstance().getCurrentSession();
@@ -99,10 +99,6 @@ public class CtrlCasDUsAssignarUsuarisANotificarUnaReserva {
         InfoReservaAmbNotificacio info = ran.getInfo();
 
         IServeiMissatgeriaAdapter adapter = FactoriaAdapters.getInstance().getServeiMissatgeriaAdapter();
-        try {
-            adapter.enviarDadesReserva(nomRecurs, data, horaInici, info.getHoraFi(), info.getUsername(), info.getComentari(), emails);
-        } catch (ServeiNoDisponible serveiNoDisponible) {
-            serveiNoDisponible.printStackTrace();
-        }
+        adapter.enviarDadesReserva(nomRecurs, data, horaInici, info.getHoraFi(), info.getUsername(), info.getComentari(), emails);
     }
 }

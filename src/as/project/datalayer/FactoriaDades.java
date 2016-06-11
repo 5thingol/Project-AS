@@ -4,6 +4,8 @@ import as.project.domain.model.*;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.hibernate.cfg.Configuration;
+import org.hibernate.event.internal.DefaultLoadEventListener;
+import org.hibernate.event.spi.LoadEventListener;
 import org.hibernate.service.ServiceRegistry;
 import org.hibernate.service.ServiceRegistryBuilder;
 import org.hibernate.tool.hbm2ddl.SchemaExport;
@@ -26,6 +28,9 @@ public class FactoriaDades {
             configuration.addAnnotatedClass(ReservaAmbNotificacio.class);
             configuration.addAnnotatedClass(Usuari.class);
             configuration.configure("hibernate.cfg.xml");
+
+            // TODO: ROMAAA AFEGEIX EL INTERCEPTOR AQUI
+            configuration.setInterceptor(new Triggers());
 
             new SchemaExport(configuration).create(true, true);
 
