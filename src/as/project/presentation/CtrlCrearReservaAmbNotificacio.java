@@ -91,7 +91,7 @@ public class CtrlCrearReservaAmbNotificacio {
         }
 		String[] usernames = new String[usuaris.size()];
 		for (int i = 0; i < usuaris.size(); i++){
-			 usernames[i] = (usuaris.get(i).getNom());
+			 usernames[i] = (usuaris.get(i).getUsername());
 		}
 		view.mostraSeleccionaUsuarisPerNotificar(usernames);
 		view.continua();
