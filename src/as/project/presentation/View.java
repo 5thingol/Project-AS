@@ -50,6 +50,7 @@ public class View extends JFrame {
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setResizable(false);
 		setBounds(100, 100, 600, 400);
+		setTitle("Gestió de Recursos");
 		contentPane = new JPanel();
 		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
 		setContentPane(contentPane);
@@ -101,7 +102,7 @@ public class View extends JFrame {
 		panel.add(Data);
 		
 		JLabel lblNewLabel_1 = new JLabel("Hora inici: ");
-		lblNewLabel_1.setBounds(73, 145, 62, 14);
+		lblNewLabel_1.setBounds(73, 145, 78, 14);
 		panel.add(lblNewLabel_1);
 		
 		JLabel lblHoraFi = new JLabel("Hora fi: ");

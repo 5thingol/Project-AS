@@ -38,24 +38,28 @@ public class CtrlCrearReservaAmbNotificacio {
 	public void PrAcceptObteRecursosDisponibles (Date data, int horaIni, int horaFi){
 		Date today = new Date();
 		String msg = "";
-		if (data.before(today)) msg += "Data passada "; 
+		if (data == null || data.before(today)) msg += "Data incorrecte ";
 		if (horaIni >= horaFi) msg += "periodeErroni ";
 		List<InfoRecurs> recursos = null;
-		try {
-			recursos = ctrlRN.obteRecursosDisponibles(data, horaIni, horaFi);
-		} catch (NoHiHaRecursos e) {
-			view.MostraMissatge("NoHiHaRecursos", 1);
-		}
-		//if (recursos.size() == 0) msg += "noHiHaRecursos";
-		//if (msg != "") view.MostraMissatge(msg, 0);
-		//else {
+		if (msg == "") {
+			try {
+				recursos = ctrlRN.obteRecursosDisponibles(data, horaIni, horaFi);
+			} catch (NoHiHaRecursos e) {
+				view.MostraMissatge("NoHiHaRecursos", 0);
+			}
+
+			//if (recursos.size() == 0) msg += "noHiHaRecursos";
+			//if (msg != "") view.MostraMissatge(msg, 0);
+			//else {
 			String[] ll_recursos = new String[recursos.size()];
-			for (int i = 0; i < recursos.size(); i++){
-				 ll_recursos[i] = (recursos.get(i).getNom());
+			for (int i = 0; i < recursos.size(); i++) {
+				ll_recursos[i] = (recursos.get(i).getNom());
 			}
 			view.mostraRecursos(ll_recursos);
 			view.continua();
-		//}
+			//}
+		}
+		else view.MostraMissatge(msg, 0);
 	}
 	
 	public void PrAcceptCreaReservaAmbNotificacio (String nomR, String username, String comentari){
