@@ -29,7 +29,6 @@ public class FactoriaDades {
             configuration.addAnnotatedClass(Usuari.class);
             configuration.configure("hibernate.cfg.xml");
 
-            // TODO: ROMAAA AFEGEIX EL INTERCEPTOR AQUI
             //configuration.setInterceptor(new Triggers());
 
             new SchemaExport(configuration).create(true, true);

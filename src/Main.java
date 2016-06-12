@@ -1,12 +1,13 @@
 import as.project.datalayer.FactoriaDades;
-import as.project.domain.model.Projector;
-import as.project.domain.model.Reserva;
-import as.project.domain.model.Usuari;
+import as.project.domain.model.*;
 import as.project.presentation.CtrlCrearReservaAmbNotificacio;
 import as.project.presentation.View;
 import org.hibernate.Session;
 
+import java.util.Arrays;
 import java.util.Date;
+import java.util.HashSet;
+import java.util.Set;
 
 /**
  * Created by sergi on 12/06/16.
@@ -22,6 +23,10 @@ public class Main {
     }
 
     static void addData() {
+
+        FactoriaDades.getInstance().openSession();
+        Session session = FactoriaDades.getInstance().getCurrentSession();
+        session.beginTransaction();
 
         Projector recurs = new Projector();
         recurs.setNom("Projector");
@@ -44,7 +49,6 @@ public class Main {
         r1.setHoraFi(10);
         r1.setComentari("Comment1");
         r1.setUsuariCreador(u1);
-        //u1.assignaReserva(r1);
 
         Reserva r2 = new Reserva();
         r2.setRecurs(recurs);
@@ -53,17 +57,44 @@ public class Main {
         r2.setHoraFi(19);
         r2.setComentari("Comment2");
         r2.setUsuariCreador(u2);
-        //u2.assignaReserva(r2);
-
-        FactoriaDades.getInstance().openSession();
-        Session session = FactoriaDades.getInstance().getCurrentSession();
-        session.beginTransaction();
 
         session.save(recurs);
         session.save(u1);
         session.save(u2);
         session.save(r1);
         session.save(r2);
+
+        Sala s1 = new Sala();
+        s1.setNom("nom_s1");
+        s1.setProjector(recurs);
+        s1.setUbicacio("ubicacio_s1");
+        s1.setAforament(1);
+
+        for (int i = 0; i < 15; i++) {
+            Ordinador o = new Ordinador("nom_o"+i, "marca_o"+i, "model_o"+i);
+            Projector p = new Projector("resolucio_p"+i);
+            p.setNom("nom_p"+i);
+            session.save(o);
+            session.save(p);
+            if (i%2 == 0) {
+                Sala s = new Sala ("nom_s"+i, i, "ubicacio_s"+i, o, p);
+                session.save(s);
+            }
+            else {
+                Usuari u = new Usuari ("username"+i, "nom_u"+i, "usuari."+(2+i)+"@est.fib.upc.edu");
+                session.save(u);
+            }
+        }
+
+        ReservaAmbNotificacio rn1 = new ReservaAmbNotificacio();
+        Set<Usuari> aux = new HashSet<Usuari>(Arrays.asList(u2));
+        rn1.afegeixUsuaris(aux);
+        rn1.setComentari("coment_rn1");
+        rn1.setData(new Date(2016, 10, 03));
+        rn1.setHoraFi(13);
+        rn1.setHoraInici(10);
+        rn1.setRecurs(s1);
+        rn1.setUsuariCreador(u1);
 
         session.getTransaction().commit();
         FactoriaDades.getInstance().closeSession();

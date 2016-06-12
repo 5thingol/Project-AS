@@ -80,6 +80,7 @@ public class CtrlCasDUsAssignarUsuarisANotificarUnaReserva {
         reservaStub.setData(data);
         reservaStub.setHoraInici(horaInici);
 
+        System.out.println(reservaStub.getRecurs().getNom());
         ReservaAmbNotificacio ran = (ReservaAmbNotificacio) session.get(ReservaAmbNotificacio.class, reservaStub);
 
         int nUsuarisNotificats = ran.getNumUsuarisNotificats();

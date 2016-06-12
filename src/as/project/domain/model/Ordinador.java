@@ -16,6 +16,10 @@ public class Ordinador extends Recurs{
     @Column(name = "model")
     private String model;
 
+    public Ordinador() {
+        super();
+    }
+
     public Ordinador(String nomOrdinador) {
         super(nomOrdinador);
     }

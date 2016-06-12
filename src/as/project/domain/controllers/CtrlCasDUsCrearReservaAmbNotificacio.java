@@ -6,6 +6,7 @@ import as.project.domain.model.*;
 import as.project.domain.services.ServeiMissatgeriaStub;
 import as.project.domain.services.adapters.FactoriaAdapters;
 import as.project.domain.services.adapters.IServeiMissatgeriaAdapter;
+import org.hibernate.CallbackException;
 import org.hibernate.Session;
 
 import java.util.*;
@@ -60,8 +61,19 @@ public class CtrlCasDUsCrearReservaAmbNotificacio {
         ran.afegeixUsuaris(usuaris);
         */
 
-        // Guarda la nova reserva amb notificació
-        session.save(ran);
+        try {
+            // Guarda la nova reserva amb notificació
+            session.save(ran);
+        } catch (CallbackException exception) {
+            switch (exception.getMessage()) {
+                case "UsuariNoExisteix":
+                    throw new UsuariNoExisteix();
+                case "RecursSalaSolapada":
+                    throw new RecursSalaSolapada();
+            }
+        }
+
+        //session.getTransaction().commit();
 
         // Notifica la reserva a l'usuari creador
 
