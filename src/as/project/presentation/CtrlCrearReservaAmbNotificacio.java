@@ -1,9 +1,11 @@
 package as.project.presentation;
 
+import as.project.datalayer.FactoriaDades;
 import as.project.domain.controllers.CtrlCasDUsCrearReservaAmbNotificacio;
 import as.project.domain.excepcions.*;
 import as.project.domain.model.InfoRecurs;
 import as.project.domain.model.InfoUsuari;
+import org.hibernate.Session;
 
 import java.awt.*;
 import java.util.ArrayList;
@@ -12,22 +14,11 @@ import java.util.List;
 
 public class CtrlCrearReservaAmbNotificacio {
 
+    Session session;
 
     /**
      * Launch the application.
      */
-  /*  public static void main(String[] args) {
-        EventQueue.invokeLater(new Runnable() {
-            public void run() {
-                try {
-                    View frame = new View(this);
-                    frame.setVisible(true);
-                } catch (Exception e) {
-                    e.printStackTrace();
-                }
-            }
-        });
-    }*/
 	View view;
 	CtrlCasDUsCrearReservaAmbNotificacio ctrlRN;
 	public CtrlCrearReservaAmbNotificacio (){
@@ -36,7 +27,12 @@ public class CtrlCrearReservaAmbNotificacio {
 	}
 	
 	public void PrAcceptObteRecursosDisponibles (Date data, int horaIni, int horaFi){
-		Date today = new Date();
+
+        FactoriaDades.getInstance().openSession();
+        session = FactoriaDades.getInstance().getCurrentSession();
+        session.beginTransaction();
+
+        Date today = new Date();
 		String msg = "";
 		if (data == null || data.before(today)) msg += "Data incorrecte ";
 		if (horaIni >= horaFi) msg += "periodeErroni ";
@@ -46,6 +42,8 @@ public class CtrlCrearReservaAmbNotificacio {
 				recursos = ctrlRN.obteRecursosDisponibles(data, horaIni, horaFi);
 			} catch (NoHiHaRecursos e) {
 				view.MostraMissatge("NoHiHaRecursos", 0);
+                session.getTransaction().rollback();
+                return;
 			}
 
 			//if (recursos.size() == 0) msg += "noHiHaRecursos";
@@ -67,14 +65,30 @@ public class CtrlCrearReservaAmbNotificacio {
 		try {
 			ctrlRN.creaReservaAmbNotificacio(nomR, username, comentari);
 		}
-		catch(UsuariNoExisteix excepcio) {view.MostraMissatge("UsuariNoExisteix", 1);}
-		catch(RecursSalaSolapada excepcio) {view.MostraMissatge("RecursSalaSolapada", 1);}
-		catch(ServeiNoDisponible excepcio) {view.MostraMissatge("ServeiNoDisponible", 1);}
+		catch(UsuariNoExisteix excepcio) {
+            view.MostraMissatge("UsuariNoExisteix", 1);
+            session.getTransaction().rollback();
+            return;
+        }
+		catch(RecursSalaSolapada excepcio) {
+            view.MostraMissatge("RecursSalaSolapada", 1);
+            session.getTransaction().rollback();
+            return;
+        }
+		catch(ServeiNoDisponible excepcio) {
+            view.MostraMissatge("ServeiNoDisponible", 1);
+            session.getTransaction().rollback();
+            return;
+        }
 		List<InfoUsuari> usuaris = null;
 		try {
 			usuaris = ctrlRN.obteUsuarisPerAssignar();
 		}
-		catch(NoHiHaProusUsuaris excepcio) {view.MostraMissatge("noHiHaUsuaris", 2);}
+		catch(NoHiHaProusUsuaris excepcio) {
+            view.MostraMissatge("noHiHaUsuaris", 2);
+            session.getTransaction().rollback();
+            return;
+        }
 		String[] usernames = new String[usuaris.size()];
 		for (int i = 0; i < usuaris.size(); i++){
 			 usernames[i] = (usuaris.get(i).getNom());
@@ -87,8 +101,17 @@ public class CtrlCrearReservaAmbNotificacio {
 		try {
 			ctrlRN.assignarUsuarisAReserva(usernames);
 		}
-		catch(ServeiNoDisponible excepcio) {view.MostraMissatge("ServeiNoDisponible", 2);}
-		catch(ReservaATope excepcio) {view.MostraMissatge("ReservaATope", 2);}
+		catch(ServeiNoDisponible excepcio) {
+            view.MostraMissatge("ServeiNoDisponible", 2);
+            session.getTransaction().rollback();
+            return;
+        }
+		catch(ReservaATope excepcio) {
+            view.MostraMissatge("ReservaATope", 2);
+            session.getTransaction().rollback();
+            return;
+        }
 		view.continua();
+        session.getTransaction().commit();
 	}
 }

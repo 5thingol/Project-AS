@@ -57,7 +57,7 @@ public class Triggers extends EmptyInterceptor {
                     throw new CallbackException("ReservaAmbNotificacioJaExisteix");
                 }
 
-            }else{
+            } else {
 
                 Reserva reserva = (Reserva) entity;
 
