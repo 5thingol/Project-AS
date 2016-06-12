@@ -2,7 +2,7 @@ import as.project.datalayer.FactoriaDades;
 import as.project.domain.controllers.CtrlCasDUsCrearReservaAmbNotificacio;
 import as.project.domain.model.*;
 import org.hibernate.Session;
-
+/*
 import javax.mail.Message;
 import javax.mail.PasswordAuthentication;
 import javax.mail.Transport;
@@ -15,7 +15,7 @@ import java.util.Date;
  * Created by eduard on 17/04/16.
  */
 public class DBTest {
-    public static void enviarMissatgeReserva(String nomRecurs, Date data, int horaInici, int horaFi, String username, String comentari, List<String> emails) {
+  /*  public static void enviarMissatgeReserva(String nomRecurs, Date data, int horaInici, int horaFi, String username, String comentari, List<String> emails) {
 
         String from = "guillem.cordoba@gmail.com";
 
@@ -145,7 +145,7 @@ public class DBTest {
             printMenu();
         }
         */
-    }
+   /* }
 
     static void printMenu() {
         System.out.println("OPTIONS:");
@@ -200,5 +200,5 @@ public class DBTest {
 
         session.getTransaction().commit();
         FactoriaDades.getInstance().closeSession();
-    }
+    }*/
 }

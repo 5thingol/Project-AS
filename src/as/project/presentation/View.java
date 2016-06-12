@@ -17,8 +17,7 @@ import java.util.Properties;
 
 
 public class View extends JFrame {
-	
-	CtrlCrearReservaAmbNotificacio ctrl = new CtrlCrearReservaAmbNotificacio();
+
 
 	private JPanel contentPane;
 	private JTextField textField = new JTextField();
@@ -41,11 +40,13 @@ public class View extends JFrame {
 	
 	String[] values = null;
 
+	CtrlCrearReservaAmbNotificacio ctrl;
 
 	/**
 	 * Create the frame.
 	 */
-	public View() {
+	public View(CtrlCrearReservaAmbNotificacio ctrl) {
+		this.ctrl = ctrl;
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setResizable(false);
 		setBounds(100, 100, 600, 400);
@@ -53,14 +54,15 @@ public class View extends JFrame {
 		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
 		setContentPane(contentPane);
 		contentPane.setLayout(new CardLayout(0, 0));
+		setVisible(true);
 		
 		initPanel0();
 		
-		initPanel1();
+		//initPanel1();
 		
-		initPanel2();
+		//initPanel2();
 		
-		initPanel3();
+		//initPanel3();
 		
 	}
 	

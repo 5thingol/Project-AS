@@ -11,29 +11,28 @@ import java.util.Date;
 import java.util.List;
 
 public class CtrlCrearReservaAmbNotificacio {
-	
-	View view = new View();
-	CtrlCasDUsCrearReservaAmbNotificacio ctrlRN = new CtrlCasDUsCrearReservaAmbNotificacio();
+
 
     /**
      * Launch the application.
      */
-    public static void main(String[] args) {
+  /*  public static void main(String[] args) {
         EventQueue.invokeLater(new Runnable() {
             public void run() {
                 try {
-                    View frame = new View();
+                    View frame = new View(this);
                     frame.setVisible(true);
                 } catch (Exception e) {
                     e.printStackTrace();
                 }
             }
         });
-    }
-
-
+    }*/
+	View view;
+	CtrlCasDUsCrearReservaAmbNotificacio ctrlRN;
 	public CtrlCrearReservaAmbNotificacio (){
-		
+		view = new View (this);
+		ctrlRN = new CtrlCasDUsCrearReservaAmbNotificacio();
 	}
 	
 	public void PrAcceptObteRecursosDisponibles (Date data, int horaIni, int horaFi){
