@@ -7,6 +7,7 @@ import as.project.domain.model.Recurs;
 import as.project.domain.model.Reserva;
 import as.project.domain.model.Sala;
 import org.hibernate.Session;
+import org.hibernate.criterion.Restrictions;
 
 import java.util.ArrayList;
 import java.util.Date;
@@ -25,6 +26,12 @@ public class CtrlCasDUsConsultarRecursosDisponiblesPerData {
         // Obtenim tots els recursos i les reserves
         List<Recurs> recursosDisponibles = session.createCriteria(Recurs.class).list();
         List<Reserva> totesReserves = session.createCriteria(Reserva.class).list();
+
+        List<Sala> recursosPerTreure = session.createCriteria(Sala.class).list();
+        for(Sala sala : recursosPerTreure){
+            recursosDisponibles.remove(sala.getOrdinador());
+            recursosDisponibles.remove(sala.getProjector());
+        }
 
         // Esborrem de la llista de tots els recursos aquells que ja estiguin reservats en l'interval donat
         // i també els que es troben en una sala i per tant no poden ser reservats per separat
