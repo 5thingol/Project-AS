@@ -68,9 +68,19 @@ public class Sala extends Recurs {
 
     @Override
     public InfoRecurs getExtraInfo(){
-        InfoRecurs infoOrd = ordinador.getExtraInfo();
-        InfoRecurs infoProj = projector.getExtraInfo();
-        return new InfoRecurs(null,infoOrd.getMarca(),infoOrd.getModel(),aforament,ubicacio,infoProj.getResolucio());
+        String marca = null;
+        String model = null;
+        String resolucio = null;
+        if (ordinador != null) {
+            InfoRecurs infoOrd = ordinador.getExtraInfo();
+            marca = infoOrd.getMarca();
+            model = infoOrd.getModel();
+        }
+        if (projector != null) {
+            InfoRecurs infoProj = projector.getExtraInfo();
+            resolucio = infoProj.getResolucio();
+        }
+        return new InfoRecurs(null,marca,model,aforament,ubicacio,resolucio);
     }
 
     /*

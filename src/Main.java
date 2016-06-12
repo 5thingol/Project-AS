@@ -37,6 +37,7 @@ public class Main {
         u1.setNom("as.project.domain.model.Usuari 1");
         u1.setUsername("usuari1");
 
+
         Usuari u2 = new Usuari();
         u2.setEmail("usuari.2@est.fib.upc.edu");
         u2.setNom("as.project.domain.model.Usuari 2");
@@ -58,17 +59,16 @@ public class Main {
         r2.setComentari("Comment2");
         r2.setUsuariCreador(u2);
 
-        session.save(recurs);
-        session.save(u1);
-        session.save(u2);
-        session.save(r1);
-        session.save(r2);
-
         Sala s1 = new Sala();
         s1.setNom("nom_s1");
         s1.setProjector(recurs);
         s1.setUbicacio("ubicacio_s1");
         s1.setAforament(1);
+
+        session.save(recurs);
+        session.save(u1);
+        session.save(u2);
+        session.save(s1);
 
         for (int i = 0; i < 15; i++) {
             Ordinador o = new Ordinador("nom_o"+i, "marca_o"+i, "model_o"+i);
@@ -86,8 +86,14 @@ public class Main {
             }
         }
 
+        session.getTransaction().commit();
+
+        Session session2 = FactoriaDades.getInstance().getCurrentSession();
+        session2.beginTransaction();
+
         ReservaAmbNotificacio rn1 = new ReservaAmbNotificacio();
-        Set<Usuari> aux = new HashSet<Usuari>(Arrays.asList(u2));
+        Set<Usuari> aux = new HashSet<Usuari>();
+        aux.add(u2);
         rn1.afegeixUsuaris(aux);
         rn1.setComentari("coment_rn1");
         rn1.setData(new Date(2016, 10, 03));
@@ -96,7 +102,11 @@ public class Main {
         rn1.setRecurs(s1);
         rn1.setUsuariCreador(u1);
 
-        session.getTransaction().commit();
+        session2.save(r1);
+        session2.save(r2);
+        session2.save(rn1);
+
+        session2.getTransaction().commit();
         FactoriaDades.getInstance().closeSession();
     }
 }

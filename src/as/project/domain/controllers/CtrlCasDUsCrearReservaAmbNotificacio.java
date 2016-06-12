@@ -73,8 +73,6 @@ public class CtrlCasDUsCrearReservaAmbNotificacio {
             }
         }
 
-        //session.getTransaction().commit();
-
         // Notifica la reserva a l'usuari creador
 
         List<String> emails = new ArrayList<>();

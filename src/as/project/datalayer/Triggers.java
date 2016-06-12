@@ -72,10 +72,6 @@ public class Triggers extends EmptyInterceptor {
                     reserva.getHoraInici() > 23 || reserva.getHoraFi() < 1 || reserva.getHoraFi() > 24)
                 throw new CallbackException("PeriodeErroni");
 
-            Criteria criteria = FactoriaDades.getInstance().getCurrentSession().createCriteria(Reserva.class)
-                    .add(Restrictions.eq("recurs.nom", reserva.getRecurs().getNom()))
-                    .add(Restrictions.eq("data", reserva.getData()));
-
             List<Reserva> reservaList =
                     FactoriaDades.getInstance().getCurrentSession().createCriteria(Reserva.class)
                             .add(Restrictions.eq("recurs.nom", reserva.getRecurs().getNom()))

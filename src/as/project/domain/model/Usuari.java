@@ -77,37 +77,15 @@ public class Usuari {
         return new InfoUsuari(username, nom, email);
     }
 
-    /** CANVIAT: COMENTAT PERQUE EN PRINCIPI NO NECESSITEM LES RESERVES CREADES DE L'USUARI, SI NO PODEM FER EL TRIGGER
-     * SHA DE DESCOMENTAR
-     */
-    /**
-     * Comprova si l'usuari ja te reservada una altra sala en un periode que se solapa amb l'indicat
-     * @param data: la data del periode que es vol comprovar
-     * @param horaInici: l'hora d'inici del periode que es vol comprovar
-     * @param horaFi: l'hora de fi del periode que es vol comprovar
-     * @return true si l'usuari te una reserva d'una sala que se solapa amb el periode,
-     * false en qualsevol altre cas
-
-    public boolean usuariSolapaReservaDeSala(Date data, int horaInici, int horaFi) {
-        Boolean salaSolapada = false;
-
-        // Recorrer la llista de reserves que ha creat l'usuari i comprovar si alguna se solapa
-        // amb el periode passat per parametre
-        for (Reserva reserva : reservesCreades) {
-            // Comprovar si la reserva es d'una sala i si hi ha solapacio
-            if (reserva.esReservaDeSala() && reserva.solapa(data, horaInici, horaFi)) salaSolapada = true;
+    @Override
+    public boolean equals(Object obj) {
+        if (obj == null) {
+            return false;
         }
-        return salaSolapada;
+        if (getClass() != obj.getClass()) {
+            return false;
+        }
+        final Usuari user = (Usuari) obj;
+        return user.getUsername() == username;
     }
-
-    /**
-     * Afegeix la reserva passada com a parametre a la llista de reserves creades per l'usuari
-     * @param reserva: la reserva que s'afegira a les reserves creades per l'usuari
-
-    public void assignaReserva(Reserva reserva) {
-        reservesCreades.add(reserva);
-    }
-
-
-    **/
 }
