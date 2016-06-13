@@ -12,6 +12,8 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
+import static java.lang.System.exit;
+
 public class CtrlCrearReservaAmbNotificacio {
 
     /**
@@ -97,11 +99,12 @@ public class CtrlCrearReservaAmbNotificacio {
 
 		try {
             List<InfoUsuari> usuaris = ctrlRN.obteUsuarisPerAssignar();
-            List<String> usernames = new ArrayList<String>();
+            //List<String> usernames = new ArrayList<String>();
+            String[] usernames = new String[usuaris.size()];
             for (int i = 0; i < usuaris.size(); i++){
-                usernames.add(usuaris.get(i).getUsername());
+                usernames[i] =(usuaris.get(i).getUsername());
             }
-            view.mostraSeleccionaUsuarisPerNotificar((String[])usernames.toArray());
+            view.mostraSeleccionaUsuarisPerNotificar(usernames);
             view.continua();
             session.getTransaction().commit();
 
@@ -109,8 +112,7 @@ public class CtrlCrearReservaAmbNotificacio {
 		catch(NoHiHaProusUsuaris excepcio) {
             view.MostraMissatge("noHiHaUsuaris", 2);
             session.getTransaction().rollback();
-        }catch( Exception e) {
-
+            System.out.print("----------------------------->nohihaproususuaris");
         } finally {
             FactoriaDades.getInstance().closeSession();
         }
@@ -137,6 +139,8 @@ public class CtrlCrearReservaAmbNotificacio {
         } finally {
             FactoriaDades.getInstance().closeSession();
         }
+        view.initPanel3();
         view.continua();
+
 	}
 }

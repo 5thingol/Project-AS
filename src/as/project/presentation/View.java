@@ -247,7 +247,7 @@ public class View extends JFrame {
 		textField_2.setColumns(10);
 	}
 	
-	private void initPanel3(){
+	public void initPanel3(){
 		JPanel panel_3 = new JPanel();
 		contentPane.add(panel_3, "name_7195039116315");
 		panel_3.setLayout(null);

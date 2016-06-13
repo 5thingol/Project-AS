@@ -49,6 +49,7 @@ public class ReservaAmbNotificacio extends Reserva {
     }
 
     public boolean estaATope() {
+        System.out.println(usuarisNotificats.size());
         if (usuarisNotificats.size() == 10) return true;
         else return false;
     }
