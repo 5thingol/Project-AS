@@ -69,41 +69,84 @@ public class Triggers extends EmptyInterceptor {
                     reserva.getHoraInici() > 23 || reserva.getHoraFi() < 1 || reserva.getHoraFi() > 24)
                 throw new CallbackException("PeriodeErroni");
 
+            StringBuilder queryRL = new StringBuilder("SELECT * FROM reserva r WHERE r.recurs_id = \'")
+                    .append(reserva.getRecurs().getNom())
+                    .append("\' and r.data = \'")
+                    .append(reserva.getData())
+                    .append("\' and r.hora_inici <> ")
+                    .append(reserva.getHoraInici());
 
-            List<Reserva> reservaList = (List<Reserva>)
-                    FactoriaDades.getInstance().getCurrentSession().createSQLQuery("SELECT * FROM reserva").list();
-           /* List<Reserva> reservaList = (List<Reserva>)
-                    FactoriaDades.getInstance().getCurrentSession().createCriteria(Reserva.class)
-                            .add(Restrictions.ne("horaInici", reserva.getHoraInici()))
-                            .add(Restrictions.eq("recurs.nom", reserva.getRecurs().getNom()))
-                            .add(Restrictions.eq("data", reserva.getData()))
-                            .list();*/
-            List<ReservaAmbNotificacio> reservaAmbNotificacioList = (List<ReservaAmbNotificacio>)
-                    FactoriaDades.getInstance().getCurrentSession().createSQLQuery("SELECT * FROM reservaambnotificacio").list();
+            StringBuilder queryRANL = new StringBuilder("SELECT * FROM reservaAmbNotificacio r where r.recurs_id = \'")
+                    .append(reserva.getRecurs().getNom())
+                    .append("\'and r.data = \'")
+                    .append(reserva.getData())
+                    .append("\' and r.hora_inici <> ")
+                    .append(reserva.getHoraInici());
 
-           /* List<ReservaAmbNotificacio> reservaAmbNotificacioList = (List<ReservaAmbNotificacio>)
-                    FactoriaDades.getInstance().getCurrentSession().createCriteria(ReservaAmbNotificacio.class)
-                            .add(Restrictions.eq("recurs.nom", reserva.getRecurs().getNom()))
-                            .add(Restrictions.eq("data", reserva.getData()))
-                            .list();*/
+
+            List<Object[]> reservaList = FactoriaDades.getInstance().getCurrentSession().createSQLQuery(queryRL.toString()).list();
+
+            List<Object[]> reservaAmbNotificacioList = FactoriaDades.getInstance().getCurrentSession().createSQLQuery(queryRANL.toString()).list();
 
             if(reserva.getRecurs().recEsSala()) {
-
                 boolean solapa = false;
-                for (int i = 0; !solapa && i < reservaList.size(); ++i)
-                    solapa = checkReservaSalaUsuariSolapa(reserva, reservaList.get(i));
-                for (int i = 0; !solapa && i < reservaAmbNotificacioList.size(); ++i)
-                    solapa = checkReservaSalaUsuariSolapa(reserva, reservaAmbNotificacioList.get(i));
+                for (Object[] o : reservaList) {
+                    Reserva auxR = new Reserva();
+                    auxR.setHoraInici((int)o[0]);
+                    auxR.setData((Date)o[1]);
+                    auxR.setHoraFi((int)o[3]);
+                    Usuari aux = new Usuari();
+                    aux.setUsername((String)o[5]);
+                    auxR.setUsuariCreador(aux);
+
+                    if (!solapa) {
+                        solapa = checkReservaSalaUsuariSolapa(reserva, auxR);
+                    }
+                }
+                for (Object[] o : reservaAmbNotificacioList) {
+                    Reserva auxR = new Reserva();
+                    auxR.setHoraInici((int)o[0]);
+                    auxR.setData((Date)o[1]);
+                    auxR.setHoraFi((int)o[3]);
+                    Usuari aux = new Usuari();
+                    aux.setUsername((String)o[5]);
+                    auxR.setUsuariCreador(aux);
+
+                    if (!solapa) {
+                        solapa = checkReservaSalaUsuariSolapa(reserva, auxR);
+                    }
+                }
                 if (solapa) throw new CallbackException("RecursSalaSolapada");
             }
 
             boolean solapa = false;
-            for (int i = 0; !solapa && i < reservaList.size(); ++i) solapa =
-                    checkReservaRecursSolapa(reserva, reservaList.get(i));
-            for (int i = 0; !solapa && i < reservaAmbNotificacioList.size(); ++i) solapa =
-                    checkReservaRecursSolapa(reserva, (Reserva) reservaAmbNotificacioList.get(i));
-            if (solapa) throw new CallbackException("ReservaRecursSolapada");
+            for (Object[] o : reservaList) {
+                Reserva auxR = new Reserva();
+                auxR.setHoraInici((int)o[0]);
+                auxR.setData((Date)o[1]);
+                auxR.setHoraFi((int)o[3]);
+                Usuari aux = new Usuari();
+                aux.setUsername((String)o[5]);
+                auxR.setUsuariCreador(aux);
 
+                if (!solapa) {
+                    solapa = checkReservaRecursSolapa(reserva, auxR);
+                }
+            }
+            for (Object[] o : reservaAmbNotificacioList) {
+                Reserva auxR = new Reserva();
+                auxR.setHoraInici((int)o[0]);
+                auxR.setData((Date)o[1]);
+                auxR.setHoraFi((int)o[3]);
+                Usuari aux = new Usuari();
+                aux.setUsername((String)o[5]);
+                auxR.setUsuariCreador(aux);
+
+                if (!solapa) {
+                    solapa = checkReservaRecursSolapa(reserva, auxR);
+                }
+            }
+            if (solapa) throw new CallbackException("ReservaRecursSolapada");
 
             if(entity instanceof ReservaAmbNotificacio){
                 Set<Usuari> usuaris = new HashSet<>();
