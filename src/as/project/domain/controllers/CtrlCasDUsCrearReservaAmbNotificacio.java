@@ -73,15 +73,16 @@ public class CtrlCasDUsCrearReservaAmbNotificacio {
 
     }
 
-    public List<InfoUsuari> obteUsuarisPerAssignar() throws NoHiHaProusUsuaris {
+    public List<InfoUsuari> obteUsuarisPerAssignar() throws NoHiHaProusUsuaris,  NoHiHaReserva, NoReservaAmbNotificacio
+        , ReservaCaducada, ReservaATope{
         // Salvem la instància del controlador per a poder-lo fer servir en la funció assignarUsuarisAReserva
         instanciaCtrlAssignar = new CtrlCasDUsAssignarUsuarisANotificarUnaReserva();
         List<InfoUsuari> result = null;
         try {
             result = instanciaCtrlAssignar.obteUsuarisAAssignar(nomRecurs, data, horaInici);
-        } catch (NoHiHaProusUsuaris e) {
+        } catch (Exception e) {
             throw e;
-        } catch (Exception e) {} // Cap de les altres excepcions de la funcio cridada es podra donar en aquest punt del codi
+        } // Cap de les altres excepcions de la funcio cridada es podra donar en aquest punt del codi
 
         return result;
     }

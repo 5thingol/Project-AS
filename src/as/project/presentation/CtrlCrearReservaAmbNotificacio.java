@@ -94,14 +94,14 @@ public class CtrlCrearReservaAmbNotificacio {
         session = FactoriaDades.getInstance().getCurrentSession();
         session.beginTransaction();
 
-        List<InfoUsuari> usuaris;
+
 		try {
-            usuaris = ctrlRN.obteUsuarisPerAssignar();
-            String[] usernames = new String[usuaris.size()];
+            List<InfoUsuari> usuaris = ctrlRN.obteUsuarisPerAssignar();
+            List<String> usernames = new ArrayList<String>();
             for (int i = 0; i < usuaris.size(); i++){
-                usernames[i] = (usuaris.get(i).getUsername());
+                usernames.add(usuaris.get(i).getUsername());
             }
-            view.mostraSeleccionaUsuarisPerNotificar(usernames);
+            view.mostraSeleccionaUsuarisPerNotificar((String[])usernames.toArray());
             view.continua();
             session.getTransaction().commit();
 
@@ -109,6 +109,8 @@ public class CtrlCrearReservaAmbNotificacio {
 		catch(NoHiHaProusUsuaris excepcio) {
             view.MostraMissatge("noHiHaUsuaris", 2);
             session.getTransaction().rollback();
+        }catch( Exception e) {
+
         } finally {
             FactoriaDades.getInstance().closeSession();
         }
