@@ -20,7 +20,7 @@ import java.util.Set;
 })
 public class ReservaAmbNotificacio extends Reserva {
 
-    @ManyToMany(cascade = CascadeType.ALL)
+    @ManyToMany
     @JoinTable(
             name = "ES_NOTIFICA",
             joinColumns = {@JoinColumn(name = "recurs_id"),

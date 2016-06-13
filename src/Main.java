@@ -99,6 +99,12 @@ public class Main {
         rn1.setRecurs(s1);
         rn1.setUsuariCreador(u1);
 
+        session.getTransaction().commit();
+        FactoriaDades.getInstance().closeSession();
+        FactoriaDades.getInstance().openSession();
+        session = FactoriaDades.getInstance().getCurrentSession();
+        session.beginTransaction();
+
         session.save(r1);
         session.save(r2);
         session.save(rn1);

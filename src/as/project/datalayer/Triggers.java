@@ -1,9 +1,6 @@
 package as.project.datalayer;
 
-import as.project.domain.model.Reserva;
-import as.project.domain.model.ReservaAmbNotificacio;
-import as.project.domain.model.Sala;
-import as.project.domain.model.Usuari;
+import as.project.domain.model.*;
 import org.hibernate.CallbackException;
 import org.hibernate.Criteria;
 import org.hibernate.EmptyInterceptor;
@@ -60,9 +57,9 @@ public class Triggers extends EmptyInterceptor {
 
             }
 
-            Reserva reserva = (Reserva) entity;
-           /* Usuari user = reserva.getUsuariCreador();
-/*            if(user == null || FactoriaDades.getInstance().getCurrentSession().get(Usuari.class, (Serializable) user.getUsername()) == null)
+           Reserva reserva = (Reserva) entity;
+           Usuari user = reserva.getUsuariCreador();
+            if(user == null || FactoriaDades.getInstance().getCurrentSession().get(Usuari.class, (Serializable) user.getUsername()) == null)
                 throw new CallbackException("UsuariNoExisteix");
 
             if(entity instanceof ReservaAmbNotificacio && ((ReservaAmbNotificacio) entity).getUsuarisNotificats().size() > 10)
@@ -71,17 +68,24 @@ public class Triggers extends EmptyInterceptor {
             if (reserva.getHoraInici() >= reserva.getHoraFi() || reserva.getHoraInici() < 0 ||
                     reserva.getHoraInici() > 23 || reserva.getHoraFi() < 1 || reserva.getHoraFi() > 24)
                 throw new CallbackException("PeriodeErroni");
-/*
+
+
             List<Reserva> reservaList = (List<Reserva>)
+                    FactoriaDades.getInstance().getCurrentSession().createSQLQuery("SELECT * FROM reserva").list();
+           /* List<Reserva> reservaList = (List<Reserva>)
                     FactoriaDades.getInstance().getCurrentSession().createCriteria(Reserva.class)
+                            .add(Restrictions.ne("horaInici", reserva.getHoraInici()))
                             .add(Restrictions.eq("recurs.nom", reserva.getRecurs().getNom()))
                             .add(Restrictions.eq("data", reserva.getData()))
-                            .list();
+                            .list();*/
             List<ReservaAmbNotificacio> reservaAmbNotificacioList = (List<ReservaAmbNotificacio>)
+                    FactoriaDades.getInstance().getCurrentSession().createSQLQuery("SELECT * FROM reservaambnotificacio").list();
+
+           /* List<ReservaAmbNotificacio> reservaAmbNotificacioList = (List<ReservaAmbNotificacio>)
                     FactoriaDades.getInstance().getCurrentSession().createCriteria(ReservaAmbNotificacio.class)
                             .add(Restrictions.eq("recurs.nom", reserva.getRecurs().getNom()))
                             .add(Restrictions.eq("data", reserva.getData()))
-                            .list();
+                            .list();*/
 
             if(reserva.getRecurs().recEsSala()) {
 
@@ -89,7 +93,7 @@ public class Triggers extends EmptyInterceptor {
                 for (int i = 0; !solapa && i < reservaList.size(); ++i)
                     solapa = checkReservaSalaUsuariSolapa(reserva, reservaList.get(i));
                 for (int i = 0; !solapa && i < reservaAmbNotificacioList.size(); ++i)
-                    solapa = checkReservaSalaUsuariSolapa(reserva, reservaList.get(i));
+                    solapa = checkReservaSalaUsuariSolapa(reserva, reservaAmbNotificacioList.get(i));
                 if (solapa) throw new CallbackException("RecursSalaSolapada");
             }
 
@@ -99,15 +103,11 @@ public class Triggers extends EmptyInterceptor {
             for (int i = 0; !solapa && i < reservaAmbNotificacioList.size(); ++i) solapa =
                     checkReservaRecursSolapa(reserva, (Reserva) reservaAmbNotificacioList.get(i));
             if (solapa) throw new CallbackException("ReservaRecursSolapada");
-*/
+
 
             if(entity instanceof ReservaAmbNotificacio){
                 Set<Usuari> usuaris = new HashSet<>();
                 usuaris.add(reserva.getUsuariCreador());
-                System.out.println(((ReservaAmbNotificacio) entity).getRecurs().getNom());
-                System.out.println(((ReservaAmbNotificacio) entity).getData());
-                System.out.println(((ReservaAmbNotificacio) entity).getHoraInici());
-                System.out.println(reserva.getUsuariCreador().getUsername());
                 ((ReservaAmbNotificacio) entity).afegeixUsuaris(usuaris);
                 return true;
             }
@@ -115,6 +115,7 @@ public class Triggers extends EmptyInterceptor {
         } else if (entity instanceof Sala){
             Sala sala = (Sala) entity;
             if(sala.getAforament() < 0) throw new CallbackException("AforamentSalaErroni");
+
         }
 
         return false;
