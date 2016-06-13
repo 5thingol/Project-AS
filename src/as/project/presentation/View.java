@@ -110,7 +110,7 @@ public class View extends JFrame {
 		panel.add(lblHoraFi);
 		
 
-		datePicker.setBounds(145, 101, 119, 30);
+		datePicker.setBounds(145, 101, 200, 30);
 		panel.add(datePicker);
 		
 
@@ -127,7 +127,7 @@ public class View extends JFrame {
 		JButton btnCancel = new JButton("Cancel");
 		btnCancel.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				dispose();
+				ctrl.reStart();
 			}
 		});
 		btnCancel.setBounds(10, 285, 89, 23);
@@ -147,7 +147,7 @@ public class View extends JFrame {
 		JButton btnCancel_1 = new JButton("Cancel");
 		btnCancel_1.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				dispose();
+				ctrl.reStart();
 			}
 		});
 		btnCancel_1.setBounds(10, 282, 89, 23);
@@ -208,7 +208,7 @@ public class View extends JFrame {
 		JButton btnCancel_2 = new JButton("Cancel");
 		btnCancel_2.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				dispose();
+				ctrl.reStart();
 			}
 		});
 		btnCancel_2.setBounds(10, 283, 89, 23);
@@ -255,14 +255,14 @@ public class View extends JFrame {
 		JButton btnOk = new JButton("Ok");
 		btnOk.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				dispose();
+				ctrl.reStart();
 			}
 		});
 		btnOk.setBounds(227, 229, 89, 23);
 		panel_3.add(btnOk);
 		
 		JLabel lblLaReservaSha = new JLabel("La reserva s'ha realitzat correctament");
-		lblLaReservaSha.setBounds(171, 126, 189, 37);
+		lblLaReservaSha.setBounds(171, 126, 300, 37);
 		panel_3.add(lblLaReservaSha);
 	}
 	

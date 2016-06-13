@@ -26,9 +26,9 @@ public class ReservaAmbNotificacio extends Reserva {
             joinColumns = {@JoinColumn(name = "recurs_id"),
             @JoinColumn(name = "data"),
             @JoinColumn(name = "hora_inici")},
-            inverseJoinColumns = {@JoinColumn(table = "usuari", name = "username", referencedColumnName = "username")}
+            inverseJoinColumns = {@JoinColumn(name = "username")}
     )
-    private Set<Usuari> usuarisNotificats = new HashSet<Usuari>();
+    private Set<Usuari> usuarisNotificats = new HashSet<>();
 
     public ReservaAmbNotificacio() {}
 
@@ -49,7 +49,6 @@ public class ReservaAmbNotificacio extends Reserva {
     }
 
     public boolean estaATope() {
-        System.out.println(usuarisNotificats.size());
         if (usuarisNotificats.size() == 10) return true;
         else return false;
     }

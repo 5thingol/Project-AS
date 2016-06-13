@@ -19,6 +19,9 @@ public class CtrlCasDUsAssignarUsuarisANotificarUnaReserva {
     private int horaInici;
 
     public List<InfoUsuari> obteUsuarisAAssignar(String nomRecurs, Date data, int horaInici) throws NoReservaAmbNotificacio, NoHiHaReserva, ReservaCaducada, ReservaATope, NoHiHaProusUsuaris {
+        data.setHours(0);
+        data.setMinutes(0);
+        data.setSeconds(0);
 
         // Obtenim la sessió actual
         Session session = FactoriaDades.getInstance().getCurrentSession();
@@ -29,7 +32,8 @@ public class CtrlCasDUsAssignarUsuarisANotificarUnaReserva {
         Reserva reservaStub = new Reserva(recursStub, data, horaInici, 0, "", null);
 
         Reserva reserva = (Reserva) session.get(Reserva.class, reservaStub);
-        ReservaAmbNotificacio ran = (ReservaAmbNotificacio) session.get(ReservaAmbNotificacio.class, reservaStub);
+        ReservaAmbNotificacio reservaStub1 = new ReservaAmbNotificacio(recursStub, data, horaInici, 0, "", null);
+        ReservaAmbNotificacio ran = (ReservaAmbNotificacio) session.get(ReservaAmbNotificacio.class, reservaStub1);
 
         if (ran == null) {
             if (reserva == null) throw new NoHiHaReserva();
@@ -41,17 +45,26 @@ public class CtrlCasDUsAssignarUsuarisANotificarUnaReserva {
         data.setHours(horaInici);
         if (data.before(currentDate)) throw new ReservaCaducada();
 
-        if (ran.estaATope()) throw new ReservaATope();
+        Set<Usuari> usuarisNotificats = new HashSet<>();
+
+        try {
+            if (ran.estaATope()) throw new ReservaATope();
+
+             usuarisNotificats = ran.getUsuarisNotificats();
+
+        } catch (Exception e) {
+            usuarisNotificats = new HashSet<>();
+            usuarisNotificats.add(ran.getUsuariCreador());
+
+        }
 
         List<Usuari> totsUsuaris = session.createCriteria(Usuari.class).list();
 
-        Set<Usuari> usuarisNotificats = ran.getUsuarisNotificats();
+        if (totsUsuaris.size() == 0) throw new NoHiHaProusUsuaris();
 
         for (Usuari u : usuarisNotificats) {
             totsUsuaris.remove(u);
         }
-
-        if (totsUsuaris.size() == 0) throw new NoHiHaProusUsuaris();
 
         List<InfoUsuari> usuarisAAssignar = new ArrayList<>();
 
@@ -59,6 +72,7 @@ public class CtrlCasDUsAssignarUsuarisANotificarUnaReserva {
             InfoUsuari infoU = u.getInfo();
             usuarisAAssignar.add(infoU);
         }
+        data.setHours(0);
 
         this.nomRecurs = nomRecurs;
         this.data = data;

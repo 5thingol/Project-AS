@@ -25,6 +25,11 @@ public class CtrlCrearReservaAmbNotificacio {
 		view = new View (this);
 		ctrlRN = new CtrlCasDUsCrearReservaAmbNotificacio();
 	}
+
+    public void reStart() {
+        view.dispose();
+        view = new View (this);
+    }
 	
 	public void PrAcceptObteRecursosDisponibles (Date data, int horaIni, int horaFi){
 
