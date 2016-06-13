@@ -28,7 +28,7 @@ public class CtrlCasDUsConsultarRecursosDisponiblesPerData {
         List<Reserva> totesReserves = session.createCriteria(Reserva.class).list();
 
         List<Sala> recursosPerTreure = session.createCriteria(Sala.class).list();
-        for(Sala sala : recursosPerTreure){
+        for (Sala sala : recursosPerTreure){
             recursosDisponibles.remove(sala.getOrdinador());
             recursosDisponibles.remove(sala.getProjector());
         }
@@ -37,7 +37,9 @@ public class CtrlCasDUsConsultarRecursosDisponiblesPerData {
         // i també els que es troben en una sala i per tant no poden ser reservats per separat
         for (Reserva reserva : totesReserves) {
             Recurs recursReservat = reserva.getRecurs();
-            if (reserva.solapa(data,horaInici,horaFi)) recursosDisponibles.remove(recursReservat);
+            if (reserva.solapa(data,horaInici,horaFi)) {
+                recursosDisponibles.remove(recursReservat);
+            }
             /*if (recursReservat.recEsSala()) {
                 Sala sala = (Sala) recursReservat;
                 if (sala.getOrdinador() != null) recursosDisponibles.remove(sala.getOrdinador());

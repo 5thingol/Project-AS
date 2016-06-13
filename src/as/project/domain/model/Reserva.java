@@ -131,8 +131,9 @@ public class Reserva implements java.io.Serializable {
      *    d'us de la reserva, i false en qualsevol altre cas
      */
     public boolean solapa(Date data, int hi, int hf) {
-        if ((horaInici < hi && hi < horaFi) || (horaInici < hf && hf < horaFi)) return true;
-        else return false;
+        if (data.equals(this.data))
+            if ((horaInici <= hi && hi < horaFi) || (horaInici < hf && hf <= horaFi)) return true;
+        return false;
     }
 
     /**

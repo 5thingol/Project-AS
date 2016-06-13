@@ -44,46 +44,31 @@ public class CtrlCasDUsCrearReservaAmbNotificacio {
         Usuari usuari = (Usuari) session.get(Usuari.class, username);
         Recurs recurs = (Recurs) session.get(Recurs.class, nomRecurs);
 
-        // TODO: SI NO S'ACONSEGUEIX IMPLEMENTAR EL TRIGGER DE L'EXCEPCIÓ RECURSSALASOLAPADA, SE N'HA D'IMPLEMENTAR
-        // LA LÒGICA AQUÍ
-
         // Crea la nova reserva amb notificació i hi afegeix l'usuari creador
         ReservaAmbNotificacio ran = new ReservaAmbNotificacio(recurs, data, horaInici, horaFi, comentari, usuari);
 
-        // TODO: SI NO S'ACONSEGUEIX IMPLEMENTAR EL TRIGGER DE L'EXCEPCIÓ RECURSSALASOLAPADA,
-        // S'HA D'AFEGIR LA RESERVA A L'USUARI AQUÍ
-
-        /*
-        Set<Usuari> usuaris = new HashSet<>();
-        usuaris.add(usuari);
-
-        ran.afegeixUsuaris(usuaris);
-        */
-
         try {
+
             // Guarda la nova reserva amb notificació
             session.save(ran);
-        } catch (CallbackException exception) {
-            switch (exception.getMessage()) {
-                case "UsuariNoExisteix":
-                    throw new UsuariNoExisteix();
-                case "RecursSalaSolapada":
-                    throw new RecursSalaSolapada();
-            }
+
+            // Notifica la reserva a l'usuari creador
+            List<String> emails = new ArrayList<>();
+            emails.add(usuari.getEmail());
+
+            IServeiMissatgeriaAdapter adapter = FactoriaAdapters.getInstance().getServeiMissatgeriaAdapter();
+            adapter.enviarDadesReserva(nomRecurs, data, horaInici, horaFi, username, comentari, emails);
+
+            this.nomRecurs = nomRecurs;
+            this.comentari = comentari;
+            this.username = username;
+            this.email = usuari.getEmail();
+
+        } catch (Exception exception) {
+            if (exception.getMessage().equals("UsuariNoExisteix")) throw new UsuariNoExisteix();
+            if (exception.getMessage().equals("RecursSalaSolapada")) throw new RecursSalaSolapada();
         }
 
-        // Notifica la reserva a l'usuari creador
-
-        List<String> emails = new ArrayList<>();
-        emails.add(usuari.getEmail());
-
-        IServeiMissatgeriaAdapter adapter = FactoriaAdapters.getInstance().getServeiMissatgeriaAdapter();
-        adapter.enviarDadesReserva(nomRecurs, data, horaInici, horaFi, username, comentari, emails);
-
-        this.nomRecurs = nomRecurs;
-        this.comentari = comentari;
-        this.username = username;
-        this.email = usuari.getEmail();
     }
 
     public List<InfoUsuari> obteUsuarisPerAssignar() throws NoHiHaProusUsuaris {
