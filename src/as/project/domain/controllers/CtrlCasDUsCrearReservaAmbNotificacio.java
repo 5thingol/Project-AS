@@ -65,8 +65,10 @@ public class CtrlCasDUsCrearReservaAmbNotificacio {
             this.email = usuari.getEmail();
 
         } catch (Exception exception) {
-            if (exception.getMessage().equals("UsuariNoExisteix")) throw new UsuariNoExisteix();
-            if (exception.getMessage().equals("RecursSalaSolapada")) throw new RecursSalaSolapada();
+            if (exception.getMessage() != null) {
+                if (exception.getMessage().equals("UsuariNoExisteix")) throw new UsuariNoExisteix();
+                if (exception.getMessage().equals("RecursSalaSolapada")) throw new RecursSalaSolapada();
+            }
         }
 
     }
