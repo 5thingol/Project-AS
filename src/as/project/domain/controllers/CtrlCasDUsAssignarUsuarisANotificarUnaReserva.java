@@ -19,9 +19,6 @@ public class CtrlCasDUsAssignarUsuarisANotificarUnaReserva {
     private int horaInici;
 
     public List<InfoUsuari> obteUsuarisAAssignar(String nomRecurs, Date data, int horaInici) throws NoReservaAmbNotificacio, NoHiHaReserva, ReservaCaducada, ReservaATope, NoHiHaProusUsuaris {
-        data.setHours(0);
-        data.setMinutes(0);
-        data.setSeconds(0);
 
         // Obtenim la sessió actual
         Session session = FactoriaDades.getInstance().getCurrentSession();
@@ -45,18 +42,9 @@ public class CtrlCasDUsAssignarUsuarisANotificarUnaReserva {
         data.setHours(horaInici);
         if (data.before(currentDate)) throw new ReservaCaducada();
 
-        Set<Usuari> usuarisNotificats = new HashSet<>();
+        if (ran.estaATope()) throw new ReservaATope();
 
-        try {
-            if (ran.estaATope()) throw new ReservaATope();
-
-             usuarisNotificats = ran.getUsuarisNotificats();
-
-        } catch (Exception e) {
-            usuarisNotificats = new HashSet<>();
-            usuarisNotificats.add(ran.getUsuariCreador());
-
-        }
+        Set<Usuari> usuarisNotificats = ran.getUsuarisNotificats();
 
         List<Usuari> totsUsuaris = session.createCriteria(Usuari.class).list();
 
@@ -72,7 +60,6 @@ public class CtrlCasDUsAssignarUsuarisANotificarUnaReserva {
             InfoUsuari infoU = u.getInfo();
             usuarisAAssignar.add(infoU);
         }
-        data.setHours(0);
 
         this.nomRecurs = nomRecurs;
         this.data = data;

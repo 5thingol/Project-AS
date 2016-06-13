@@ -28,10 +28,6 @@ public class CtrlCasDUsCrearReservaAmbNotificacio {
 
     public List<InfoRecurs> obteRecursosDisponibles(Date data, int horaInici, int horaFi) throws NoHiHaRecursos {
 
-        data.setSeconds(0);
-        data.setMinutes(0);
-        data.setHours(0);
-
         CtrlCasDUsConsultarRecursosDisponiblesPerData ctrlConsultarRecursos = new CtrlCasDUsConsultarRecursosDisponiblesPerData();
         List<InfoRecurs> infosRecursos = ctrlConsultarRecursos.obteRecursosDisponiblesPerData(data, horaInici, horaFi);
 
