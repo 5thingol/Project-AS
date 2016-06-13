@@ -43,21 +43,6 @@ public class Main {
         u2.setNom("as.project.domain.model.Usuari 2");
         u2.setUsername("usuari2");
 
-        Reserva r1 = new Reserva();
-        r1.setRecurs(recurs);
-        r1.setData(new Date(2016, 8, 01));
-        r1.setHoraInici(8);
-        r1.setHoraFi(10);
-        r1.setComentari("Comment1");
-        r1.setUsuariCreador(u1);
-
-        Reserva r2 = new Reserva();
-        r2.setRecurs(recurs);
-        r2.setData(new Date(2016, 10, 01));
-        r2.setHoraInici(16);
-        r2.setHoraFi(19);
-        r2.setComentari("Comment2");
-        r2.setUsuariCreador(u2);
 
         Sala s1 = new Sala();
         s1.setNom("nom_s1");
@@ -86,10 +71,22 @@ public class Main {
             }
         }
 
-        session.getTransaction().commit();
 
-        Session session2 = FactoriaDades.getInstance().getCurrentSession();
-        session2.beginTransaction();
+        Reserva r1 = new Reserva();
+        r1.setRecurs(recurs);
+        r1.setData(new Date(2016, 8, 01));
+        r1.setHoraInici(8);
+        r1.setHoraFi(10);
+        r1.setComentari("Comment1");
+        r1.setUsuariCreador(u1);
+
+        Reserva r2 = new Reserva();
+        r2.setRecurs(recurs);
+        r2.setData(new Date(2016, 10, 01));
+        r2.setHoraInici(16);
+        r2.setHoraFi(19);
+        r2.setComentari("Comment2");
+        r2.setUsuariCreador(u2);
 
         ReservaAmbNotificacio rn1 = new ReservaAmbNotificacio();
         Set<Usuari> aux = new HashSet<Usuari>();
@@ -102,11 +99,11 @@ public class Main {
         rn1.setRecurs(s1);
         rn1.setUsuariCreador(u1);
 
-        session2.save(r1);
-        session2.save(r2);
-        session2.save(rn1);
+        session.save(r1);
+        session.save(r2);
+        session.save(rn1);
 
-        session2.getTransaction().commit();
+        session.getTransaction().commit();
         FactoriaDades.getInstance().closeSession();
     }
 }

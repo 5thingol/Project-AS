@@ -47,10 +47,7 @@ public class CtrlCasDUsAssignarUsuarisANotificarUnaReserva {
 
         Set<Usuari> usuarisNotificats = ran.getUsuarisNotificats();
 
-        System.out.println("hola");
-
         for (Usuari u : usuarisNotificats) {
-            System.out.println(u.getNom());
             totsUsuaris.remove(u);
         }
 
@@ -66,7 +63,6 @@ public class CtrlCasDUsAssignarUsuarisANotificarUnaReserva {
         this.nomRecurs = nomRecurs;
         this.data = data;
         this.horaInici = horaInici;
-
         return usuarisAAssignar;
     }
 

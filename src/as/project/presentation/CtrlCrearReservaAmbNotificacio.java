@@ -14,8 +14,6 @@ import java.util.List;
 
 public class CtrlCrearReservaAmbNotificacio {
 
-    Session session;
-
     /**
      * Launch the application.
      */
@@ -29,7 +27,7 @@ public class CtrlCrearReservaAmbNotificacio {
 	public void PrAcceptObteRecursosDisponibles (Date data, int horaIni, int horaFi){
 
         FactoriaDades.getInstance().openSession();
-        session = FactoriaDades.getInstance().getCurrentSession();
+        Session session = FactoriaDades.getInstance().getCurrentSession();
         session.beginTransaction();
 
         Date today = new Date();
@@ -40,11 +38,14 @@ public class CtrlCrearReservaAmbNotificacio {
 		if (msg == "") {
 			try {
 				recursos = ctrlRN.obteRecursosDisponibles(data, horaIni, horaFi);
-			} catch (NoHiHaRecursos e) {
+                session.getTransaction().commit();
+            } catch (NoHiHaRecursos e) {
 				view.MostraMissatge("NoHiHaRecursos", 0);
                 session.getTransaction().rollback();
                 return;
-			}
+			} finally {
+                FactoriaDades.getInstance().closeSession();
+            }
 
 			//if (recursos.size() == 0) msg += "noHiHaRecursos";
 			//if (msg != "") view.MostraMissatge(msg, 0);
@@ -58,13 +59,19 @@ public class CtrlCrearReservaAmbNotificacio {
 			//}
 		}
 		else view.MostraMissatge(msg, 0);
+
+
 	}
 	
 	public void PrAcceptCreaReservaAmbNotificacio (String nomR, String username, String comentari){
-		
+        FactoriaDades.getInstance().openSession();
+        Session session = FactoriaDades.getInstance().getCurrentSession();
+        session.beginTransaction();
+
 		try {
 			ctrlRN.creaReservaAmbNotificacio(nomR, username, comentari);
-		}
+            session.getTransaction().commit();
+        }
 		catch(UsuariNoExisteix excepcio) {
             view.MostraMissatge("UsuariNoExisteix", 1);
             session.getTransaction().rollback();
@@ -79,28 +86,43 @@ public class CtrlCrearReservaAmbNotificacio {
             view.MostraMissatge("ServeiNoDisponible", 1);
             session.getTransaction().rollback();
             return;
+        } finally {
+            FactoriaDades.getInstance().closeSession();
         }
-		List<InfoUsuari> usuaris = null;
+
+        FactoriaDades.getInstance().openSession();
+        session = FactoriaDades.getInstance().getCurrentSession();
+        session.beginTransaction();
+
+        List<InfoUsuari> usuaris;
 		try {
-			usuaris = ctrlRN.obteUsuarisPerAssignar();
-		}
+            usuaris = ctrlRN.obteUsuarisPerAssignar();
+            String[] usernames = new String[usuaris.size()];
+            for (int i = 0; i < usuaris.size(); i++){
+                usernames[i] = (usuaris.get(i).getUsername());
+            }
+            view.mostraSeleccionaUsuarisPerNotificar(usernames);
+            view.continua();
+            session.getTransaction().commit();
+
+        }
 		catch(NoHiHaProusUsuaris excepcio) {
             view.MostraMissatge("noHiHaUsuaris", 2);
             session.getTransaction().rollback();
-            return;
+        } finally {
+            FactoriaDades.getInstance().closeSession();
         }
-		String[] usernames = new String[usuaris.size()];
-		for (int i = 0; i < usuaris.size(); i++){
-			 usernames[i] = (usuaris.get(i).getUsername());
-		}
-		view.mostraSeleccionaUsuarisPerNotificar(usernames);
-		view.continua();
 	}
 	
 	public void PrAcceptAssignarUsuarisAReserva (ArrayList <String> usernames){
+        FactoriaDades.getInstance().openSession();
+        Session session = FactoriaDades.getInstance().getCurrentSession();
+        session.beginTransaction();
+
 		try {
 			ctrlRN.assignarUsuarisAReserva(usernames);
-		}
+            session.getTransaction().commit();
+        }
 		catch(ServeiNoDisponible excepcio) {
             view.MostraMissatge("ServeiNoDisponible", 2);
             session.getTransaction().rollback();
@@ -110,8 +132,9 @@ public class CtrlCrearReservaAmbNotificacio {
             view.MostraMissatge("ReservaATope", 2);
             session.getTransaction().rollback();
             return;
+        } finally {
+            FactoriaDades.getInstance().closeSession();
         }
-		view.continua();
-        session.getTransaction().commit();
+        view.continua();
 	}
 }

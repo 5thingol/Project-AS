@@ -29,7 +29,7 @@ public class FactoriaDades {
             configuration.addAnnotatedClass(Usuari.class);
             configuration.configure("hibernate.cfg.xml");
 
-            //configuration.setInterceptor(new Triggers());
+            configuration.setInterceptor(new Triggers());
 
             new SchemaExport(configuration).create(true, true);
 
@@ -57,7 +57,7 @@ public class FactoriaDades {
         return instance;
     }
 
-    //public static SessionFactory getSessionFactory() {return sessionFactory; }
+    //public SessionFactory getSessionFactory() {return sessionFactory; }
 
     public void openSession() {
         currentSession = sessionFactory.openSession();

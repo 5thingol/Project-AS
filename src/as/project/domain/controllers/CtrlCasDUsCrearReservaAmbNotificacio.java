@@ -41,7 +41,6 @@ public class CtrlCasDUsCrearReservaAmbNotificacio {
 
         // Obtenim la sessió actual
         Session session = FactoriaDades.getInstance().getCurrentSession();
-
         Usuari usuari = (Usuari) session.get(Usuari.class, username);
         Recurs recurs = (Recurs) session.get(Recurs.class, nomRecurs);
 
